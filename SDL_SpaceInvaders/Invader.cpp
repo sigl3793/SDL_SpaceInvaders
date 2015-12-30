@@ -20,6 +20,8 @@ Invader::Invader(Sprite* p_pxSprite,
 	m_bActive = true;
 	m_fSpeed = 100.0f;
 	m_fDirX = 1.0f;
+	m_iScreenHeight = 768;
+	m_iScreenWidth = 1024;
 }
 
 Invader::~Invader()
