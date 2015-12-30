@@ -1,0 +1,6 @@
+BrickAnimation.txt
+
+S // antal frames
+
+x, y, w, h, dur
+
