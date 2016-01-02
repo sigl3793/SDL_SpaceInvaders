@@ -41,15 +41,6 @@ void MenuState::Enter()
 	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/test.bmp", 0, 0,1024,768);
 	SDL_Rect* xRect = xSprite->GetRegion();
 	m_pxMenu = new Menu(m_xSystem.m_pxMouse, xSprite,0,0, m_xSystem.m_iScreenWidth, m_xSystem.m_iScreenHeight);
-
-	/*Jerry Speldesign -> Karl
-	i din MenuState::Enter gör du detta
-	Sprite* extBackgroundSprite = met_extSystem.met_pointextSpriteManager->CreateSprite("../assets/Testbild1.bmp", 0, 0, 768, 1024);
-	dvs du sätter en lokal pekare att peka till spriten du du skapar, den försvinner när scopet tar slut.
-	i MenuState::Draw kör du sedan
-	met_extSystem.met_pointextDrawManager->Draw(extpointBackgroundSprite, 0, 0); //Does not work, need clarification
-	då försöker du rita ut och använda medlemsvariabeln som är definierad i H filen :
-	Sprite* extpointBackgroundSprite;*/
 }
 
 void MenuState::Exit()
