@@ -4,7 +4,6 @@
 #include "DrawManager.h"
 #include "Mouse.h"
 #include "Sprite.h"
-#include "AnimatedSprite.h"
 #include "Player.h"
 #include "Invader.h"
 #include "CollisionManager.h"
@@ -70,7 +69,7 @@ void GameState::Enter()
 
 	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 1; j++)
+		for (int j = 0; j < 6; j++)
 		{
 			int minIndex = 0;
 			int maxIndex = 6;
@@ -92,8 +91,10 @@ void GameState::Enter()
 			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
 			Invader* pxInvader = new Invader(
 				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
-				9.5f + i * 70.f, //170.f mitt
-				10 + j * 50);
+				0.0f + i * 70.0f,
+				0.0f + j * 50.0f);
+			//9.5f + i * 70.f, //170.f mitten
+			//10 + j * 50);
 			m_apxInvaders.push_back(pxInvader);
 		}
 	}

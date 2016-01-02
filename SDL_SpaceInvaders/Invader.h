@@ -14,7 +14,6 @@ public:
 	float GetY();
 	bool IsVisible();
 	EENTITYTYPE GetType();
-	//char Waves[5];
 
 	void SetVisible(bool p_bValue);
 
@@ -22,6 +21,7 @@ public:
 	//void Activate();
 	void Deactivate();
 	void SetDirectionX(float p_fDirX);
+	void SetDirectionY(float p_fDirY);
 	//void SetPosition(float p_fX, float p_fY);
 	void ReverseDirectionX();
 private:

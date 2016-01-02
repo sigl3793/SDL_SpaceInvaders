@@ -1,6 +1,5 @@
 ﻿  GameState.cpp
-c:\users\simon\desktop\skola\programming\sdl_spaceinvaders\sdl_spaceinvaders\gamestate.cpp(59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\simon\desktop\skola\programming\sdl_spaceinvaders\sdl_spaceinvaders\gamestate.cpp(96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\simon\desktop\skola\programming\sdl_spaceinvaders\sdl_spaceinvaders\gamestate.cpp(180): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\simon\desktop\skola\programming\sdl_spaceinvaders\sdl_spaceinvaders\gamestate.cpp(191): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\simon\desktop\skola\programming\sdl_spaceinvaders\sdl_spaceinvaders\gamestate.cpp(58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\simon\desktop\skola\programming\sdl_spaceinvaders\sdl_spaceinvaders\gamestate.cpp(181): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\simon\desktop\skola\programming\sdl_spaceinvaders\sdl_spaceinvaders\gamestate.cpp(192): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   SDL_SpaceInvaders.vcxproj -> C:\Users\simon\Desktop\Skola\Programming\SDL_SpaceInvaders\Debug\SDL_SpaceInvaders.exe

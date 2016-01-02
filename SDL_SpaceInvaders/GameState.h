@@ -22,5 +22,4 @@ private:
 	std::vector<Invader*> m_apxInvaders;
 	Mix_Chunk* m_xPlopSound;
 	Mix_Music* m_xMusic;
-	AnimatedSprite* m_pxMyTempAnimatedSprite;
 };

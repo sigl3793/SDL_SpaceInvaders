@@ -18,11 +18,12 @@ Invader::Invader(Sprite* p_pxSprite,
 	m_pxCollider->Refresh();
 
 	m_bActive = true;
-	m_fSpeed = 100.0f;
+	m_fSpeed = 200.0f;
 	m_fDirX = 1.0f;
+	m_fDirY = 1.0f;
 	m_iScreenHeight = 768;
 	m_iScreenWidth = 1024;
-	//char Waves[6];
+	
 }
 
 Invader::~Invader()
@@ -38,17 +39,21 @@ void Invader::Update(float p_fDeltaTime)
 		SDL_Log("Position X:%f Y:%f", m_fX, m_fY);
 		m_fX += m_fDirX * m_fSpeed * p_fDeltaTime;
 
-		if (m_fX < 0)
+		if (m_fX <= 0)
 		{
 			m_fX = 0;
+			m_fY += 10;
 			ReverseDirectionX();
 		}
 		if (m_fX + m_pxSprite->GetRegion()->w > m_iScreenWidth)
 		{
 			m_fX = m_iScreenWidth - m_pxSprite->GetRegion()->w;
-			ReverseDirectionX(); 
+			m_fY += 10;
+			ReverseDirectionX();
+			//SDL_Log("Direction Changed");
+			//m_fX + m_pxSprite->GetRegion()->w > m_iScreenWidth
+			//m_fX >= 1000
 		}
-
 	}
 }
 
@@ -100,6 +105,11 @@ void Invader::Deactivate()
 void Invader::SetDirectionX(float p_fDirX)
 {
 	m_fDirX = p_fDirX;
+}
+
+void Invader::SetDirectionY(float p_fDirY)
+{
+	m_fDirY = p_fDirY;
 }
 
 void Invader::ReverseDirectionX()
