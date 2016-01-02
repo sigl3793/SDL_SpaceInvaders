@@ -22,6 +22,7 @@ Invader::Invader(Sprite* p_pxSprite,
 	m_fDirX = 1.0f;
 	m_iScreenHeight = 768;
 	m_iScreenWidth = 1024;
+	//char Waves[6];
 }
 
 Invader::~Invader()

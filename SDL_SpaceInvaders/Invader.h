@@ -14,6 +14,7 @@ public:
 	float GetY();
 	bool IsVisible();
 	EENTITYTYPE GetType();
+	//char Waves[5];
 
 	void SetVisible(bool p_bValue);
 

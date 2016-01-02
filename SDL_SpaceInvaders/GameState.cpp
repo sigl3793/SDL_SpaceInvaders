@@ -58,7 +58,47 @@ void GameState::Enter()
 		m_xSystem.m_iScreenHeight - 20 - iHeight,
 		m_xSystem.m_iScreenWidth);
 
-	SDL_Rect invaderCoords[] =
+	SDL_Rect Waves[] =
+	{
+		{ 1,  32, 27, 24 }, // green
+		{ 31, 32, 27, 24 }, // green
+		{ 1,  2, 27, 27 }, // purple
+		{ 31,  2, 27, 27 }, // purple
+		{ 1, 62, 27, 27 }, // red
+		{ 31, 62, 27, 27 }, // red
+	};
+
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 1; j++)
+		{
+			int minIndex = 0;
+			int maxIndex = 6;
+			if (j >= 0)
+			{
+				minIndex = 0;
+				maxIndex = 2;
+			}
+			if (j >= 2)
+			{
+				minIndex = 2;
+				maxIndex = 2;
+			}
+			if (j >= 4)
+			{
+				minIndex = 4;
+				maxIndex = 2;
+			}
+			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
+			Invader* pxInvader = new Invader(
+				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
+				9.5f + i * 70.f, //170.f mitt
+				10 + j * 50);
+			m_apxInvaders.push_back(pxInvader);
+		}
+	}
+
+	/*SDL_Rect invaderCoords[] =
 	{
 		{ 1,  32, 27, 24 }, // green
 		{ 31, 32, 27, 24 }, // green
@@ -97,7 +137,7 @@ void GameState::Enter()
 				10 + j * 50);
 			m_apxInvaders.push_back(pxInvader);
 		}
-	}
+	}*/
 	//Mix_PlayMusic(m_xMusic, -1);
 }
 
