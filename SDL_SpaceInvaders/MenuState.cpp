@@ -4,13 +4,15 @@
 #include "DrawManager.h"
 #include "Mouse.h"
 #include "Sprite.h"
-#include <iostream>
+#include <iostream> 
 #include "StateManager.h"
+#include "Menu.h"
 
 MenuState::MenuState(System& p_xSystem)
 {
 	m_xSystem = p_xSystem;
 	m_xMusic = nullptr;
+	m_pxMenu = nullptr;
 
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
 	{
@@ -35,11 +37,26 @@ MenuState::~MenuState()
 void MenuState::Enter()
 {
 	Mix_PlayMusic(m_xMusic, 0);
+	
+	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/test.bmp", 0, 0,1024,768);
+	SDL_Rect* xRect = xSprite->GetRegion();
+	m_pxMenu = new Menu(m_xSystem.m_pxMouse, xSprite,0,0, m_xSystem.m_iScreenWidth, m_xSystem.m_iScreenHeight);
+
+	/*Jerry Speldesign -> Karl
+	i din MenuState::Enter gör du detta
+	Sprite* extBackgroundSprite = met_extSystem.met_pointextSpriteManager->CreateSprite("../assets/Testbild1.bmp", 0, 0, 768, 1024);
+	dvs du sätter en lokal pekare att peka till spriten du du skapar, den försvinner när scopet tar slut.
+	i MenuState::Draw kör du sedan
+	met_extSystem.met_pointextDrawManager->Draw(extpointBackgroundSprite, 0, 0); //Does not work, need clarification
+	då försöker du rita ut och använda medlemsvariabeln som är definierad i H filen :
+	Sprite* extpointBackgroundSprite;*/
 }
 
 void MenuState::Exit()
 {
-
+	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxMenu->GetSprite());
+	delete m_pxMenu;
+	m_pxMenu = nullptr;
 }
 
 bool MenuState::Update(float p_fDeltaTime)
@@ -49,7 +66,7 @@ bool MenuState::Update(float p_fDeltaTime)
 
 void MenuState::Draw()
 {
-
+	m_xSystem.m_pxDrawManager->Draw(m_pxMenu->GetSprite(), m_pxMenu->GetX(), m_pxMenu->GetY());
 }
 
 IState* MenuState::NextState()

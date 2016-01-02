@@ -34,12 +34,18 @@ void Invader::Update(float p_fDeltaTime)
 {	
 	if (m_bActive)
 	{
+		SDL_Log("Position X:%f Y:%f", m_fX, m_fY);
 		m_fX += m_fDirX * m_fSpeed * p_fDeltaTime;
 
+		if (m_fX < 0)
+		{
+			m_fX = 0;
+			ReverseDirectionX();
+		}
 		if (m_fX + m_pxSprite->GetRegion()->w > m_iScreenWidth)
 		{
-			m_fX = m_iScreenWidth - m_pxSprite->GetRegion()->w; // denna gör så att mina invaders inte syns
-			ReverseDirectionX();
+			m_fX = m_iScreenWidth - m_pxSprite->GetRegion()->w;
+			ReverseDirectionX(); 
 		}
 
 	}
@@ -98,5 +104,6 @@ void Invader::SetDirectionX(float p_fDirX)
 void Invader::ReverseDirectionX()
 {
 	m_fDirX *= -1;
+	//m_fX += m_fDirX * m_fSpeed;
 }
 

@@ -29,6 +29,7 @@
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Invader.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Player.h" />

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IState.h"
+#include "Menu.h"
+
 class Mouse;
 
 class MenuState : public IState
@@ -15,8 +17,6 @@ public:
 	IState* NextState();
 private:
 	System m_xSystem;
-	Mouse* m_pxMouse;
 	Mix_Music* m_xMusic;
-	MenuState* m_pxMenuState;
-
+	Menu* m_pxMenu;
 };
