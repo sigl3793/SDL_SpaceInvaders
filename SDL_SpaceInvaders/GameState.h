@@ -19,7 +19,6 @@ private:
 	void CheckCollision();
 	System m_xSystem;
 	Player* m_pxPlayer;
-	//Invader* m_pxInvader;
 	std::vector<Invader*> m_apxInvaders;
 	Mix_Chunk* m_xPlopSound;
 	Mix_Music* m_xMusic;
