@@ -61,6 +61,7 @@ bool Engine::Initialize()
 	system.m_pxMouse = m_pxMouse;
 
 	m_pxStateManager->SetState(new GameState(system));
+
 	//m_pxStateManager->SetState(new MenuState(system));
 	// Har jag med den över så körs endast menustate
 
@@ -129,7 +130,15 @@ void Engine::HandleEvents()
 		}
 		else if (xEvent.key.keysym.sym == SDLK_ESCAPE)
 		{
-			// Vill lägga till så att det byter till menu men osäker om det är här man gör det
+			System menu;
+			menu.m_iScreenWidth = SCREENWIDTH;
+			menu.m_iScreenHeight = SCREEHEIGHT;
+			menu.m_pxDrawManager = m_pxDrawManager;
+			menu.m_pxSpriteManager = m_pxSpriteManager;
+			menu.m_pxMouse = m_pxMouse;
+
+			m_pxStateManager->SetState(new MenuState(menu));
+			
 		}
 	}
 }

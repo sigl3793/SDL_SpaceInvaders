@@ -2,6 +2,7 @@
 #include "Invader.h"
 #include "Collider.h"
 #include "Sprite.h"
+#include "Engine.h"
 #include <iostream>
 
 Invader::Invader(Sprite* p_pxSprite,
@@ -45,6 +46,7 @@ void Invader::Update(float p_fDeltaTime)
 			m_fY += 10;
 			ReverseDirectionX();
 		}
+
 		if (m_fX + m_pxSprite->GetRegion()->w > m_iScreenWidth)
 		{
 			m_fX = m_iScreenWidth - m_pxSprite->GetRegion()->w;
@@ -53,6 +55,11 @@ void Invader::Update(float p_fDeltaTime)
 			//SDL_Log("Direction Changed");
 			//m_fX + m_pxSprite->GetRegion()->w > m_iScreenWidth
 			//m_fX >= 1000
+		}
+		
+		if (m_fY + m_pxSprite->GetRegion()->h > m_iScreenHeight)
+		{
+			SDL_Log("YOU LOST");
 		}
 	}
 }
@@ -111,6 +118,13 @@ void Invader::SetDirectionY(float p_fDirY)
 {
 	m_fDirY = p_fDirY;
 }
+
+/*void Invader::SetPosition(float p_fX, float p_fY)
+{
+	m_fX = p_fX;
+	m_fY = p_fY;
+	m_pxCollider->Refresh();
+}*/
 
 void Invader::ReverseDirectionX()
 {

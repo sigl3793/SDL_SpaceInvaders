@@ -27,4 +27,5 @@ public:
 	virtual void Exit() {};
 	virtual void Draw() = 0;
 	virtual IState* NextState() = 0;
+
 };
