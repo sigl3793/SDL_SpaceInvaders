@@ -1,4 +1,5 @@
 #pragma once
+#include "IState.h"
 
 class DrawManager;
 class SpriteManager;
@@ -29,8 +30,10 @@ public:
 
 private:
 	bool m_bRunning;
+	System m_xSystem;
 	DrawManager* m_pxDrawManager;
 	SpriteManager* m_pxSpriteManager;
 	StateManager* m_pxStateManager;
 	Mouse* m_pxMouse;
+
 };

@@ -53,17 +53,13 @@ bool Engine::Initialize()
 
 	m_pxStateManager = new StateManager();
 
-	System system;
-	system.m_iScreenWidth = SCREENWIDTH;
-	system.m_iScreenHeight = SCREEHEIGHT;
-	system.m_pxDrawManager = m_pxDrawManager;
-	system.m_pxSpriteManager = m_pxSpriteManager;
-	system.m_pxMouse = m_pxMouse;
+	m_xSystem.m_iScreenWidth = SCREENWIDTH;
+	m_xSystem.m_iScreenHeight = SCREEHEIGHT;
+	m_xSystem.m_pxDrawManager = m_pxDrawManager;
+	m_xSystem.m_pxSpriteManager = m_pxSpriteManager;
+	m_xSystem.m_pxMouse = m_pxMouse;
 
-	m_pxStateManager->SetState(new GameState(system));
-
-	//m_pxStateManager->SetState(new MenuState(system));
-	// Har jag med den över så körs endast menustate
+	m_pxStateManager->SetState(new GameState(m_xSystem));
 
 	m_bRunning = true;
 
@@ -130,15 +126,7 @@ void Engine::HandleEvents()
 		}
 		else if (xEvent.key.keysym.sym == SDLK_ESCAPE)
 		{
-			System menu;
-			menu.m_iScreenWidth = SCREENWIDTH;
-			menu.m_iScreenHeight = SCREEHEIGHT;
-			menu.m_pxDrawManager = m_pxDrawManager;
-			menu.m_pxSpriteManager = m_pxSpriteManager;
-			menu.m_pxMouse = m_pxMouse;
-
-			m_pxStateManager->SetState(new MenuState(menu));
-			
+			m_pxStateManager->SetState(new MenuState(m_xSystem));
 		}
 	}
 }
