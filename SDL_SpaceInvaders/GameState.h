@@ -3,6 +3,7 @@
 #include "IState.h"
 class Player;
 class Invader;
+class Shot;
 class AnimatedSprite;
 
 class GameState : public IState
@@ -19,6 +20,7 @@ private:
 	void CheckCollision();
 	System m_xSystem;
 	Player* m_pxPlayer;
+	Shot* m_pxShot;
 	std::vector<Invader*> m_apxInvaders;
 	Mix_Chunk* m_xPlopSound;
 	Mix_Music* m_xMusic;

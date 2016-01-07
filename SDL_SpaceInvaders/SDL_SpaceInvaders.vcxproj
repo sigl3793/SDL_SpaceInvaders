@@ -33,6 +33,7 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Shot.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="StateManager.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Shot.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StateManager.h" />

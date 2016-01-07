@@ -6,6 +6,7 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Invader.h"
+#include "Shot.h"
 #include "CollisionManager.h"
 #include "StateManager.h"
 #include "MenuState.h"
@@ -16,6 +17,7 @@ GameState::GameState(System& p_xSystem)
 {
 	m_xSystem = p_xSystem;
 	m_pxPlayer = nullptr;
+	m_pxShot = nullptr;
 
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
 	{
@@ -57,6 +59,11 @@ void GameState::Enter()
 		m_xSystem.m_iScreenHeight - 20 - iHeight,
 		m_xSystem.m_iScreenWidth);
 
+	m_pxShot = new Shot(m_xSystem.m_pxMouse,
+		m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invadersgammal.bmp", 73, 2, 3, 9),
+		m_xSystem.m_iScreenWidth,
+		m_xSystem.m_iScreenHeight);
+
 	SDL_Rect Waves[] =
 	{
 		{ 1,  32, 27, 24 }, // green
@@ -91,9 +98,8 @@ void GameState::Enter()
 			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
 			Invader* pxInvader = new Invader(
 				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
-				0.0f + i * 70.0f,
-				0.0f + j * 50.0f);
-			//pxInvader->SetPosition(0.0f, 0.0f);
+				-25.0f + i * 70.0f,
+				50.0f + j * 50.0f);
 			m_apxInvaders.push_back(pxInvader);
 		}
 	}
@@ -105,6 +111,10 @@ void GameState::Exit()
 	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxPlayer->GetSprite());
 	delete m_pxPlayer;
 	m_pxPlayer = nullptr;
+
+	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxShot->GetSprite());
+	delete m_pxShot;
+	m_pxShot = nullptr;
 
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
@@ -119,6 +129,16 @@ void GameState::Exit()
 bool GameState::Update(float p_fDeltaTime)
 {
 	m_pxPlayer->Update(p_fDeltaTime);
+	m_pxShot->Update(p_fDeltaTime);
+	if (m_pxShot->IsActive() == false)
+	{
+		m_pxShot->SetPosition(m_pxPlayer->GetX() + m_pxPlayer->GetSprite()->GetRegion()->w / 2 - m_pxShot->GetSprite()->GetRegion()->w / 2,
+			m_pxPlayer->GetY() - m_pxPlayer->GetSprite()->GetRegion()->h / 2 - m_pxShot->GetSprite()->GetRegion()->h / 2 + 15);
+	}
+	if (m_pxShot->GetY() > m_xSystem.m_iScreenHeight)
+	{
+		m_pxShot->Deactivate();
+	}
 
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
@@ -142,7 +162,7 @@ bool GameState::Update(float p_fDeltaTime)
 void GameState::Draw()
 {
 	m_xSystem.m_pxDrawManager->Draw(m_pxPlayer->GetSprite(), m_pxPlayer->GetX(), m_pxPlayer->GetY());
-	
+	m_xSystem.m_pxDrawManager->Draw(m_pxShot->GetSprite(), m_pxShot->GetX(), m_pxShot->GetY());
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
@@ -168,5 +188,39 @@ void GameState::CheckCollision()
 {
 	int iOverlapX = 0;
 	int iOverlapY = 0;
-
+	/*if (CollisionManager::Check(m_pxPlayer->GetCollider(), m_pxShot->GetCollider(), iOverlapX, iOverlapY))
+	{
+		if (abs(iOverlapX) > abs(iOverlapY))
+		{
+			m_pxShot->SetPosition(m_pxShot->GetX() - iOverlapX, m_pxShot->GetY());
+			m_pxShot->Deactivate();
+		}
+		else
+		{
+			m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
+			m_pxShot->Deactivate();
+		}
+	}*/
+	auto it = m_apxInvaders.begin();
+	while (it != m_apxInvaders.end())
+	{
+		if ((*it)->IsVisible())
+		{
+			if (CollisionManager::Check((*it)->GetCollider(), m_pxShot->GetCollider(), iOverlapX, iOverlapY))
+			{
+				(*it)->SetVisible(false);
+				if (abs(iOverlapX) > abs(iOverlapY))
+				{
+					m_pxShot->SetPosition(m_pxShot->GetX() - iOverlapX, m_pxShot->GetY());
+					m_pxShot->Deactivate();
+				}
+				else
+				{
+					m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
+					m_pxShot->Deactivate();
+				}
+			}
+		}
+		it++;
+	}
 }
