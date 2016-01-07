@@ -38,7 +38,7 @@ void MenuState::Enter()
 {
 	Mix_PlayMusic(m_xMusic, 0);
 	
-	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/test.bmp", 0, 0,1024,768);
+	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/menu.bmp", 0, 0,1024,768);
 	SDL_Rect* xRect = xSprite->GetRegion();
 	m_pxMenu = new Menu(m_xSystem.m_pxMouse, xSprite,0,0, m_xSystem.m_iScreenWidth, m_xSystem.m_iScreenHeight);
 }

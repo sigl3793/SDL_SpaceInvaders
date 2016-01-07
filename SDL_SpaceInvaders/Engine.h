@@ -5,6 +5,7 @@ class DrawManager;
 class SpriteManager;
 class StateManager;
 class Mouse;
+class Keyboard;
 
 class Engine
 {
@@ -35,5 +36,7 @@ private:
 	SpriteManager* m_pxSpriteManager;
 	StateManager* m_pxStateManager;
 	Mouse* m_pxMouse;
+	Keyboard* m_pxKeyboard;
+	int states;
 
 };

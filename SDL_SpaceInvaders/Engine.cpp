@@ -5,6 +5,7 @@
 #include "StateManager.h"
 #include "Sprite.h"
 #include "Mouse.h"
+#include "Keyboard.h"
 #include "GameState.h"
 #include "MenuState.h"
 #include "IState.h"
@@ -21,6 +22,8 @@ Engine::Engine()
 	m_pxSpriteManager = nullptr;
 	m_pxStateManager = nullptr;
 	m_pxMouse = nullptr;
+	m_pxKeyboard = nullptr;
+	states = 0;
 }
 
 Engine::~Engine()
@@ -124,9 +127,15 @@ void Engine::HandleEvents()
 		{
 			m_pxMouse->SetPosition(xEvent.motion.x, xEvent.motion.y);
 		}
-		else if (xEvent.key.keysym.sym == SDLK_ESCAPE)
+		else if (xEvent.key.keysym.sym == SDLK_ESCAPE && states == 0)
 		{
 			m_pxStateManager->SetState(new MenuState(m_xSystem));
+			states = 1;
+			break;
+		}
+		else if (xEvent.key.keysym.sym == SDLK_ESCAPE && states == 1)
+		{
+			m_bRunning = false;
 		}
 	}
 }

@@ -2,6 +2,7 @@
 
 #include "Mouse.h"
 #include "Keyboard.h"
+#include "IState.h"
 
 /*
 Suggested structure for a potential future InputManager
@@ -29,4 +30,5 @@ public:
 private:
 	Mouse* m_pxMouse;
 	Keyboard* m_pxKeyboard;
+	StateManager* m_pxStateManager;
 };

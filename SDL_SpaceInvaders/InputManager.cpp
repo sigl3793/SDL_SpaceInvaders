@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Engine.h"
 #include "InputManager.h"
+#include "StateManager.h"
+#include "IState.h"
 #include "Mouse.h"
 #include "Keyboard.h"
 
@@ -46,9 +48,5 @@ bool InputManager::IsKeyDown(int p_iIndex)
 
 void InputManager::Update()
 {
-	SDL_Event xEvent;
-	while (SDL_PollEvent(&xEvent))
-	{
 
-	}
 }
