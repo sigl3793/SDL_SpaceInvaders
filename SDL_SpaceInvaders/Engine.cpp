@@ -133,7 +133,7 @@ void Engine::HandleEvents()
 		{
 			m_pxMouse->SetPosition(xEvent.motion.x, xEvent.motion.y);
 		}
-		if (xEvent.key.keysym.sym == SDLK_ESCAPE)
+		else if (xEvent.key.keysym.sym == SDLK_ESCAPE)
 		{
 			m_pxStateManager->SetState(new MenuState(m_xSystem));
 		}

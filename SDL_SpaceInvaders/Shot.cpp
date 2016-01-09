@@ -45,6 +45,7 @@ void Shot::Update(float p_fDeltaTime)
 		if (m_pxMouse->IsButtonDown(1))
 		{
 			Activate();
+			m_pxMouse->SetButton(1,false);
 		}
 	}
 }
@@ -79,12 +80,9 @@ EENTITYTYPE Shot::GetType()
 }
 void Shot::Activate()
 {
-	if (m_bActive == false)
-	{
-		m_bActive = true;
-		m_fSpeed = 1000;
-		m_fDirY = -1.0f;
-	}
+	m_bActive = true;
+	m_fSpeed = 1000;
+	m_fDirY = -1.0f;
 }
 void Shot::Deactivate()
 {
