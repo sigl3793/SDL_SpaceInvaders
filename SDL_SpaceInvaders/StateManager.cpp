@@ -29,7 +29,6 @@ bool StateManager::Update()
 		(SDL_GetTicks() - m_iLastTick)
 		* 0.001f;
 
-
 	if (m_pxCurrentState != nullptr)
 	{
 		if (m_pxCurrentState->Update(fDeltaTime) == false)

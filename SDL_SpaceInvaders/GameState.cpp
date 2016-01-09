@@ -149,6 +149,7 @@ bool GameState::Update(float p_fDeltaTime)
 		}
 		it++;
 	}
+
 	/*if (m_pxBall->GetY() > m_xSystem.m_iScreenHeight)
 	{
 		m_pxBall->Deactivate();

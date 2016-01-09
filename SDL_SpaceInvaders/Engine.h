@@ -6,6 +6,7 @@ class SpriteManager;
 class StateManager;
 class Mouse;
 class Keyboard;
+class InputManager;
 
 class Engine
 {
@@ -37,6 +38,5 @@ private:
 	StateManager* m_pxStateManager;
 	Mouse* m_pxMouse;
 	Keyboard* m_pxKeyboard;
-	int states;
-
+	InputManager* m_pxInputManager;
 };

@@ -8,6 +8,7 @@
 #include "Keyboard.h"
 #include "GameState.h"
 #include "MenuState.h"
+#include "InputManager.h"
 #include "IState.h"
 #include <iostream>
 #include <ctime>
@@ -23,7 +24,7 @@ Engine::Engine()
 	m_pxStateManager = nullptr;
 	m_pxMouse = nullptr;
 	m_pxKeyboard = nullptr;
-	states = 0;
+	m_pxInputManager = nullptr;
 }
 
 Engine::~Engine()
@@ -56,6 +57,8 @@ bool Engine::Initialize()
 
 	m_pxStateManager = new StateManager();
 
+	m_pxInputManager = new InputManager();
+
 	m_xSystem.m_iScreenWidth = SCREENWIDTH;
 	m_xSystem.m_iScreenHeight = SCREEHEIGHT;
 	m_xSystem.m_pxDrawManager = m_pxDrawManager;
@@ -72,6 +75,9 @@ bool Engine::Initialize()
 void Engine::Shutdown()
 {
 	// The shutdown function will quit, delete and shutdown everything we have started up or created in initialize (In reverse order of creation)
+	delete m_pxInputManager;
+	m_pxInputManager = nullptr;
+
 	delete m_pxStateManager;
 	m_pxStateManager = nullptr;
 
@@ -127,15 +133,9 @@ void Engine::HandleEvents()
 		{
 			m_pxMouse->SetPosition(xEvent.motion.x, xEvent.motion.y);
 		}
-		else if (xEvent.key.keysym.sym == SDLK_ESCAPE && states == 0)
+		if (xEvent.key.keysym.sym == SDLK_ESCAPE)
 		{
 			m_pxStateManager->SetState(new MenuState(m_xSystem));
-			states = 1;
-			break;
-		}
-		else if (xEvent.key.keysym.sym == SDLK_ESCAPE && states == 1)
-		{
-			m_bRunning = false;
 		}
 	}
 }

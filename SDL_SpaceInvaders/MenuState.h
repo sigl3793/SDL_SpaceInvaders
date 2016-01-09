@@ -2,6 +2,7 @@
 
 #include "IState.h"
 #include "Menu.h"
+#include "StateManager.h"
 
 class Mouse;
 
@@ -19,4 +20,5 @@ private:
 	System m_xSystem;
 	Mix_Music* m_xMusic;
 	Menu* m_pxMenu;
+	StateManager* m_pxCurrentState;
 };
