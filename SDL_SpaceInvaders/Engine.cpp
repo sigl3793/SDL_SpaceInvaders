@@ -53,6 +53,8 @@ bool Engine::Initialize()
 	}
 	m_pxMouse = new Mouse();
 
+	m_pxKeyboard = new Keyboard();
+
 	m_pxSpriteManager = new SpriteManager(m_pxDrawManager->GetRenderer());
 
 	m_pxStateManager = new StateManager();
@@ -83,6 +85,9 @@ void Engine::Shutdown()
 
 	delete m_pxSpriteManager;
 	m_pxSpriteManager = nullptr;
+
+	delete m_pxKeyboard;
+	m_pxKeyboard = nullptr;
 
 	delete m_pxMouse;
 	m_pxMouse = nullptr;
@@ -133,9 +138,20 @@ void Engine::HandleEvents()
 		{
 			m_pxMouse->SetPosition(xEvent.motion.x, xEvent.motion.y);
 		}
-		else if (xEvent.key.keysym.sym == SDLK_ESCAPE)
+		else if (xEvent.type == SDL_KEYDOWN)
+		{
+			m_pxKeyboard->IsKeyDown(27);
+			m_pxKeyboard->SetKey(xEvent.button.button, true);
+			m_pxStateManager->SetState(new MenuState(m_xSystem));
+
+		}
+		else if (xEvent.type == SDL_KEYUP)
+		{
+			m_pxKeyboard->SetKey(xEvent.button.button, false);
+		}
+		/*else if (xEvent.key.keysym.sym == SDLK_ESCAPE)
 		{
 			m_pxStateManager->SetState(new MenuState(m_xSystem));
-		}
+		}*/
 	}
 }
