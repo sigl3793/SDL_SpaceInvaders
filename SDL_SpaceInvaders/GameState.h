@@ -25,4 +25,5 @@ private:
 	Mix_Chunk* m_xPlopSound;
 	Mix_Music* m_xMusic;
 	Invader* m_pxInvader;
+	int Score;
 };

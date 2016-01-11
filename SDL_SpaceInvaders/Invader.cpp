@@ -19,12 +19,14 @@ Invader::Invader(Sprite* p_pxSprite,
 	m_pxCollider->Refresh();
 
 	m_bActive = true;
-	m_fSpeed = 100.0f;
+	m_fSpeed = 0.0f;
+	m_fISpeed = 0.0f;
 	m_fDirX = 1.0f;
 	m_fDirY = 0.0f;
 	m_iScreenHeight = 768;
 	m_iScreenWidth = 1024;
 	
+	m_bIncrease = false;
 }
 
 Invader::~Invader()
@@ -37,25 +39,8 @@ void Invader::Update(float p_fDeltaTime)
 {	
 	if (m_bActive)
 	{
-		SDL_Log("Position X:%f Y:%f", m_fX, m_fY);
-		m_fX += m_fDirX * m_fSpeed * p_fDeltaTime;
-
-		/*if (m_fX <= 0)
-		{
-			m_fX = 0;
-			ReverseDirectionX();
-		}
-
-		if (m_fX + m_pxSprite->GetRegion()->w > m_iScreenWidth)
-		{
-			m_fX = m_iScreenWidth - m_pxSprite->GetRegion()->w;
-			ReverseDirectionX();
-		}
-		
-		if (m_fY + m_pxSprite->GetRegion()->h > m_iScreenHeight)
-		{
-			SDL_Log("YOU LOST");
-		}*/
+		//SDL_Log("Position X:%f Y:%f", m_fX, m_fY);
+		m_fX += m_fDirX * (m_fSpeed+m_fISpeed) * p_fDeltaTime;
 		m_pxCollider->Refresh();
 	}
 }
@@ -97,6 +82,7 @@ void Invader::SetVisible(bool p_bValue)
 
 bool Invader::IsActive()
 {
+	m_fSpeed = 100.0f;
 	return m_bActive;
 }
 
@@ -125,6 +111,11 @@ void Invader::SetPosition(float p_fX, float p_fY)
 void Invader::ReverseDirectionX()
 {
 	m_fY += 10;
-	m_fDirX *= -1;
+	m_fDirX *= -1.0f;
 }
 
+bool Invader::IncreaseSpeed()
+{
+	m_fISpeed = 50.0f;
+	return m_bIncrease;
+}

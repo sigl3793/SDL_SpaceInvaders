@@ -24,6 +24,7 @@ public:
 	void SetDirectionY(float p_fDirY);
 	void SetPosition(float p_fX, float p_fY);
 	void ReverseDirectionX();
+	bool IncreaseSpeed();
 private:
 	//AnimatedSprite* m_pxAnimatedSprite;
 	Sprite* m_pxSprite;
@@ -38,4 +39,6 @@ private:
 	float m_fSpeed;
 	float m_fDirX;
 	float m_fDirY;
+	bool m_bIncrease;
+	float m_fISpeed;
 };

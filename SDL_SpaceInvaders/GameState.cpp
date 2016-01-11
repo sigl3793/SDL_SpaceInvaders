@@ -19,6 +19,7 @@ GameState::GameState(System& p_xSystem)
 	m_xSystem = p_xSystem;
 	m_pxPlayer = nullptr;
 	m_pxShot = nullptr;
+	Score = 0;
 
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
 	{
@@ -113,6 +114,7 @@ void GameState::Enter()
 				-25.0f + i * 70.0f,
 				50.0f + j * 50.0f);
 			m_apxInvaders.push_back(pxInvader);
+			
 		}
 	}
 	//Mix_PlayMusic(m_xMusic, -1);
@@ -214,11 +216,12 @@ void GameState::CheckCollision()
 			m_pxShot->Deactivate();
 		}
 	}*/
-	int m_iScreenWidth = 1024;
-	int m_iScreenHeight = 768;
+
+
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
+		//[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,59]
 		if ((*it)->IsVisible())
 		{
 			if (CollisionManager::Check((*it)->GetCollider(), m_pxShot->GetCollider(), iOverlapX, iOverlapY))
@@ -228,26 +231,42 @@ void GameState::CheckCollision()
 				{
 					m_pxShot->SetPosition(m_pxShot->GetX() - iOverlapX, m_pxShot->GetY());
 					m_pxShot->Deactivate();
+					Score += 100;
+					std::cout << "Score:" << Score << std::endl;
 				}
 				else
 				{
 					m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
 					m_pxShot->Deactivate();
+					Score += 100;
+					std::cout << "Score:" << Score << std::endl;
 				}
 			}
+
+			if (Score == 200)
+			{
+				(*it)->IncreaseSpeed() == true;
+
+			}
+			/*if (m_apxInvaders[59]->GetX() + m_apxInvaders[59]->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth)
+			{
+				m_apxInvaders[59]->SetPosition(m_xSystem.m_iScreenWidth - m_apxInvaders[59]->GetSprite()->GetRegion()->w, m_apxInvaders[59]->GetY());
+				m_apxInvaders[59]->ReverseDirectionX();
+			}*/
+			
 			if ((*it)->GetX() <= 0)
 			{
 				(*it)->SetPosition(0, (*it)->GetY());
 				(*it)->ReverseDirectionX();
 			}
 
-			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_iScreenWidth)
+			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth)
 			{
-				(*it)->SetPosition(m_iScreenWidth - (*it)->GetSprite()->GetRegion()->w, (*it)->GetY());
+				(*it)->SetPosition(m_xSystem.m_iScreenWidth - (*it)->GetSprite()->GetRegion()->w, (*it)->GetY());
 				(*it)->ReverseDirectionX();
 			}
 
-			if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h > m_iScreenHeight)
+			if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h >  m_xSystem.m_iScreenHeight)
 			{
 				SDL_Log("YOU LOSE");
 			}
