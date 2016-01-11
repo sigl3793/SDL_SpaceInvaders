@@ -21,7 +21,7 @@ Invader::Invader(Sprite* p_pxSprite,
 	m_bActive = true;
 	m_fSpeed = 100.0f;
 	m_fDirX = 1.0f;
-	m_fDirY = 1.0f;
+	m_fDirY = 0.0f;
 	m_iScreenHeight = 768;
 	m_iScreenWidth = 1024;
 	
@@ -40,7 +40,7 @@ void Invader::Update(float p_fDeltaTime)
 		SDL_Log("Position X:%f Y:%f", m_fX, m_fY);
 		m_fX += m_fDirX * m_fSpeed * p_fDeltaTime;
 
-		if (m_fX <= 0)
+		/*if (m_fX <= 0)
 		{
 			m_fX = 0;
 			ReverseDirectionX();
@@ -55,7 +55,7 @@ void Invader::Update(float p_fDeltaTime)
 		if (m_fY + m_pxSprite->GetRegion()->h > m_iScreenHeight)
 		{
 			SDL_Log("YOU LOST");
-		}
+		}*/
 		m_pxCollider->Refresh();
 	}
 }
@@ -115,17 +115,16 @@ void Invader::SetDirectionY(float p_fDirY)
 	m_fDirY = p_fDirY;
 }
 
-/*void Invader::SetPosition(float p_fX, float p_fY)
+void Invader::SetPosition(float p_fX, float p_fY)
 {
 	m_fX = p_fX;
 	m_fY = p_fY;
 	m_pxCollider->Refresh();
-}*/
+}
 
 void Invader::ReverseDirectionX()
 {
 	m_fY += 10;
 	m_fDirX *= -1;
-	//m_fX += m_fDirX * m_fSpeed;
 }
 

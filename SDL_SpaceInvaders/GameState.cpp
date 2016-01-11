@@ -75,6 +75,16 @@ void GameState::Enter()
 		{ 31, 62, 27, 27 }, // red
 	};
 
+	/*SDL_Rect Test[] =
+	{
+		{1,2,3,4,5,6,7,8,9,10},
+		{11,12,13,14,15,16,17,18,19,20},
+		{21,22,23,24,25,26,27,28,29,30},
+		{31,32,33,34,35,36,37,38,39,40},
+		{41,42,43,44,45,46,47,48,49,50},
+		{51,52,53,54,55,56,57,58,59,60}
+	};*/
+
 	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 6; j++)
@@ -96,6 +106,7 @@ void GameState::Enter()
 				minIndex = 4;
 				maxIndex = 2;
 			}
+
 			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
 			Invader* pxInvader = new Invader(
 				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
@@ -151,14 +162,13 @@ bool GameState::Update(float p_fDeltaTime)
 		it++;
 	}
 
-	/*if (m_pxBall->GetY() > m_xSystem.m_iScreenHeight)
-	{
-		m_pxBall->Deactivate();
-		SDL_Log("Player lost a life");
-	}*/
-
 	CheckCollision();
-	return true;
+	if(m_xSystem.m_pxKeyboard->IsKeyDown(41))
+	{
+		return false;
+	}
+	else
+		return true;
 
 }
 
@@ -204,6 +214,8 @@ void GameState::CheckCollision()
 			m_pxShot->Deactivate();
 		}
 	}*/
+	int m_iScreenWidth = 1024;
+	int m_iScreenHeight = 768;
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
@@ -222,6 +234,22 @@ void GameState::CheckCollision()
 					m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
 					m_pxShot->Deactivate();
 				}
+			}
+			if ((*it)->GetX() <= 0)
+			{
+				(*it)->SetPosition(0, (*it)->GetY());
+				(*it)->ReverseDirectionX();
+			}
+
+			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_iScreenWidth)
+			{
+				(*it)->SetPosition(m_iScreenWidth - (*it)->GetSprite()->GetRegion()->w, (*it)->GetY());
+				(*it)->ReverseDirectionX();
+			}
+
+			if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h > m_iScreenHeight)
+			{
+				SDL_Log("YOU LOSE");
 			}
 		}
 		it++;

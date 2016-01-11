@@ -22,7 +22,7 @@ public:
 	void Deactivate();
 	void SetDirectionX(float p_fDirX);
 	void SetDirectionY(float p_fDirY);
-	//void SetPosition(float p_fX, float p_fY);
+	void SetPosition(float p_fX, float p_fY);
 	void ReverseDirectionX();
 private:
 	//AnimatedSprite* m_pxAnimatedSprite;

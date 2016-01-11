@@ -13,7 +13,6 @@ InputManager::InputManager()
 	// Kolla vilken state som är aktiv och uppdatera vilka knappar som gör vad
 	m_pxMouse = nullptr;
 	m_pxKeyboard = nullptr;
-	
 }
 
 
@@ -61,9 +60,4 @@ bool InputManager::IsKeyDown(int p_iIndex)
 
 void InputManager::Update()
 {
-	SDL_Event xEvent;
-	while (SDL_PollEvent(&xEvent))
-	{
-
-	}
 }

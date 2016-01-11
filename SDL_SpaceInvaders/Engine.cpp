@@ -66,6 +66,7 @@ bool Engine::Initialize()
 	m_xSystem.m_pxDrawManager = m_pxDrawManager;
 	m_xSystem.m_pxSpriteManager = m_pxSpriteManager;
 	m_xSystem.m_pxMouse = m_pxMouse;
+	m_xSystem.m_pxKeyboard = m_pxKeyboard;
 
 	m_pxStateManager->SetState(new GameState(m_xSystem));
 
@@ -140,18 +141,12 @@ void Engine::HandleEvents()
 		}
 		else if (xEvent.type == SDL_KEYDOWN)
 		{
-			m_pxKeyboard->IsKeyDown(27);
 			m_pxKeyboard->SetKey(xEvent.button.button, true);
-			m_pxStateManager->SetState(new MenuState(m_xSystem));
-
+			//m_pxStateManager->SetState(new MenuState(m_xSystem));
 		}
 		else if (xEvent.type == SDL_KEYUP)
 		{
 			m_pxKeyboard->SetKey(xEvent.button.button, false);
 		}
-		/*else if (xEvent.key.keysym.sym == SDLK_ESCAPE)
-		{
-			m_pxStateManager->SetState(new MenuState(m_xSystem));
-		}*/
 	}
 }

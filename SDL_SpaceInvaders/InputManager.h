@@ -1,9 +1,5 @@
 #pragma once
 
-#include "Mouse.h"
-#include "Keyboard.h"
-#include "IState.h"
-
 /*
 Suggested structure for a potential future InputManager
 Init will create objects needed and shutdown will delete them.
