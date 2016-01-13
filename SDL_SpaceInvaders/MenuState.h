@@ -3,8 +3,7 @@
 #include "IState.h"
 #include "Menu.h"
 #include "StateManager.h"
-
-class Mouse;
+class StateManager;
 
 class MenuState : public IState
 {
@@ -20,5 +19,5 @@ private:
 	System m_xSystem;
 	Mix_Music* m_xMusic;
 	Menu* m_pxMenu;
-	StateManager* m_pxCurrentState;
+	StateManager* m_pxStateManager;
 };

@@ -68,7 +68,7 @@ bool Engine::Initialize()
 	m_xSystem.m_pxMouse = m_pxMouse;
 	m_xSystem.m_pxKeyboard = m_pxKeyboard;
 
-	m_pxStateManager->SetState(new GameState(m_xSystem));
+	m_pxStateManager->SetState(new MenuState(m_xSystem));
 
 	m_bRunning = true;
 

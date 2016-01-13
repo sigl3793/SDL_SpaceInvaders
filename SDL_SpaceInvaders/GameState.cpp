@@ -11,7 +11,10 @@
 #include "CollisionManager.h"
 #include "StateManager.h"
 #include "MenuState.h"
+#include "GameOverState.h"
+#include "WinState.h"
 #include <iostream>
+#include "Engine.h"
 
 
 GameState::GameState(System& p_xSystem)
@@ -19,6 +22,7 @@ GameState::GameState(System& p_xSystem)
 	m_xSystem = p_xSystem;
 	m_pxPlayer = nullptr;
 	m_pxShot = nullptr;
+	m_pxInvader = nullptr;
 	Score = 0;
 
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
@@ -66,6 +70,11 @@ void GameState::Enter()
 		m_xSystem.m_iScreenWidth,
 		m_xSystem.m_iScreenHeight);
 
+	/*SDL_Rect Box[] =
+	{
+		{0,0,657,277}
+	};*/
+
 	SDL_Rect Waves[] =
 	{
 		{ 1,  32, 27, 24 }, // green
@@ -75,16 +84,6 @@ void GameState::Enter()
 		{ 1, 62, 27, 27 }, // red
 		{ 31, 62, 27, 27 }, // red
 	};
-
-	/*SDL_Rect Test[] =
-	{
-		{1,2,3,4,5,6,7,8,9,10},
-		{11,12,13,14,15,16,17,18,19,20},
-		{21,22,23,24,25,26,27,28,29,30},
-		{31,32,33,34,35,36,37,38,39,40},
-		{41,42,43,44,45,46,47,48,49,50},
-		{51,52,53,54,55,56,57,58,59,60}
-	};*/
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -111,12 +110,12 @@ void GameState::Enter()
 			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
 			Invader* pxInvader = new Invader(
 				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
-				-25.0f + i * 70.0f,
+				0.0f + i * 70.0f, //-25
 				50.0f + j * 50.0f);
 			m_apxInvaders.push_back(pxInvader);
-			
 		}
 	}
+
 	//Mix_PlayMusic(m_xMusic, -1);
 }
 
@@ -160,18 +159,28 @@ bool GameState::Update(float p_fDeltaTime)
 		if ((*it)->IsActive())
 		{
 			(*it)->Update(p_fDeltaTime);
+			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth || (*it)->GetX() <= 0)
+			{
+				for (auto it2 = m_apxInvaders.begin(); it2 != m_apxInvaders.end(); it2++)
+				{
+					(*it2)->ReverseDirectionX();
+				}
+			}
+			if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h >  m_xSystem.m_iScreenHeight)
+			{
+				return false;
+			}
+			else if (Score == 6000)
+			{
+				return false;
+			}
 		}
 		it++;
 	}
 
 	CheckCollision();
-	if(m_xSystem.m_pxKeyboard->IsKeyDown(41))
-	{
-		return false;
-	}
-	else
-		return true;
-
+	
+	return true;
 }
 
 void GameState::Draw()
@@ -191,32 +200,22 @@ void GameState::Draw()
 		}
 		it++;
 	}
-
 }
 
 IState* GameState::NextState()
 {
-	return nullptr;
+	if (Score == 300)
+	{
+		return (new WinState(m_xSystem));
+	}
+	else
+		return (new GameOverState(m_xSystem));
 }
 
 void GameState::CheckCollision()
 {
 	int iOverlapX = 0;
 	int iOverlapY = 0;
-	/*if (CollisionManager::Check(m_pxPlayer->GetCollider(), m_pxShot->GetCollider(), iOverlapX, iOverlapY))
-	{
-		if (abs(iOverlapX) > abs(iOverlapY))
-		{
-			m_pxShot->SetPosition(m_pxShot->GetX() - iOverlapX, m_pxShot->GetY());
-			m_pxShot->Deactivate();
-		}
-		else
-		{
-			m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
-			m_pxShot->Deactivate();
-		}
-	}*/
-
 
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
@@ -248,24 +247,23 @@ void GameState::CheckCollision()
 				(*it)->IncreaseSpeed() == true;
 
 			}
-			/*if (m_apxInvaders[59]->GetX() + m_apxInvaders[59]->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth)
+			/*if (Score >= 6000)
 			{
-				m_apxInvaders[59]->SetPosition(m_xSystem.m_iScreenWidth - m_apxInvaders[59]->GetSprite()->GetRegion()->w, m_apxInvaders[59]->GetY());
-				m_apxInvaders[59]->ReverseDirectionX();
-			}*/
-			
+				std::cout << "YOU WIN" << std::endl;
+				//SDL_QUIT?????
+			}
 			if ((*it)->GetX() <= 0)
 			{
 				(*it)->SetPosition(0, (*it)->GetY());
 				(*it)->ReverseDirectionX();
 			}
-
+	
 			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth)
 			{
 				(*it)->SetPosition(m_xSystem.m_iScreenWidth - (*it)->GetSprite()->GetRegion()->w, (*it)->GetY());
 				(*it)->ReverseDirectionX();
-			}
-
+			}*/
+			
 			if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h >  m_xSystem.m_iScreenHeight)
 			{
 				SDL_Log("YOU LOSE");

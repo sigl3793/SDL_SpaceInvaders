@@ -3,10 +3,13 @@
 #include "SpriteManager.h"
 #include "DrawManager.h"
 #include "Mouse.h"
+#include "Keyboard.h"
 #include "Sprite.h"
 #include <iostream> 
 #include "StateManager.h"
 #include "Menu.h"
+#include "GameState.h"
+#include "IState.h"
 
 MenuState::MenuState(System& p_xSystem)
 {
@@ -52,7 +55,18 @@ void MenuState::Exit()
 
 bool MenuState::Update(float p_fDeltaTime)
 {
-	return true;
+	if (m_xSystem.m_pxKeyboard->IsKeyDown(41))
+	{
+		m_xSystem.m_pxKeyboard->SetKey(41, false);
+		SDL_Quit();
+	}
+	if (m_xSystem.m_pxKeyboard->IsKeyDown(40))
+	{
+		m_xSystem.m_pxKeyboard->SetKey(40, false);
+		return false;
+	}
+	else
+		return true;
 }
 
 void MenuState::Draw()
@@ -62,6 +76,7 @@ void MenuState::Draw()
 
 IState* MenuState::NextState()
 {
-	return nullptr;
+	return (new GameState(m_xSystem));
+	//return nullptr;
 }
 
