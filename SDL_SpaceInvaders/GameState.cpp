@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Invader.h"
 #include "Shot.h"
+#include "EnemyShot.h"
 #include "Defence.h"
 #include "CollisionManager.h"
 #include "StateManager.h"
@@ -23,6 +24,7 @@ GameState::GameState(System& p_xSystem)
 	m_xSystem = p_xSystem;
 	m_pxPlayer = nullptr;
 	m_pxShot = nullptr;
+	m_pxEnemyShot = nullptr;
 	Score = 0;
 
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
@@ -66,6 +68,11 @@ void GameState::Enter()
 		m_xSystem.m_iScreenWidth);
 
 	m_pxShot = new Shot(m_xSystem.m_pxMouse,
+		m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invadersgammal.bmp", 73, 2, 3, 9),
+		m_xSystem.m_iScreenWidth,
+		m_xSystem.m_iScreenHeight);
+
+	m_pxEnemyShot = new EnemyShot(m_xSystem.m_pxMouse,
 		m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invadersgammal.bmp", 73, 2, 3, 9),
 		m_xSystem.m_iScreenWidth,
 		m_xSystem.m_iScreenHeight);
@@ -116,13 +123,13 @@ void GameState::Enter()
 				minIndex = 4;
 				maxIndex = 2;
 			}
-
+			// Invader*
 			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
-			Invader* pxInvader = new Invader(
+			m_pxInvader = new Invader(
 				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
 				0.0f + i * 70.0f, //-25
 				50.0f + j * 50.0f);
-			m_apxInvaders.push_back(pxInvader);
+			m_apxInvaders.push_back(m_pxInvader);
 		}
 	}
 
@@ -139,6 +146,10 @@ void GameState::Exit()
 	delete m_pxShot;
 	m_pxShot = nullptr;
 
+	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxEnemyShot->GetSprite());
+	delete m_pxEnemyShot;
+	m_pxEnemyShot = nullptr;
+
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
@@ -152,6 +163,7 @@ void GameState::Exit()
 bool GameState::Update(float p_fDeltaTime)
 {
 	m_pxPlayer->Update(p_fDeltaTime);
+
 	m_pxShot->Update(p_fDeltaTime);
 	if (m_pxShot->IsActive() == false)
 	{
@@ -161,6 +173,17 @@ bool GameState::Update(float p_fDeltaTime)
 	if (m_pxShot->GetY() > m_xSystem.m_iScreenHeight)
 	{
 		m_pxShot->Deactivate();
+	}
+
+	m_pxEnemyShot->Update(p_fDeltaTime);
+	if (m_pxEnemyShot->IsActive() == false)
+	{
+		m_pxEnemyShot->SetPosition(m_pxInvader->GetX() + m_pxInvader->GetSprite()->GetRegion()->w / 2 - m_pxEnemyShot->GetSprite()->GetRegion()->w / 2,
+			m_pxInvader->GetY() - m_pxInvader->GetSprite()->GetRegion()->h / 2 - m_pxEnemyShot->GetSprite()->GetRegion()->h / 2);
+	}
+	if (m_pxEnemyShot->GetY() > m_xSystem.m_iScreenHeight)
+	{
+		m_pxEnemyShot->Deactivate();
 	}
 
 	auto it = m_apxInvaders.begin();
@@ -196,7 +219,18 @@ bool GameState::Update(float p_fDeltaTime)
 void GameState::Draw()
 {
 	m_xSystem.m_pxDrawManager->Draw(m_pxPlayer->GetSprite(), m_pxPlayer->GetX(), m_pxPlayer->GetY());
-	m_xSystem.m_pxDrawManager->Draw(m_pxShot->GetSprite(), m_pxShot->GetX(), m_pxShot->GetY());
+	
+	if (m_pxShot->IsActive() == true)
+	{
+		m_xSystem.m_pxDrawManager->Draw(m_pxShot->GetSprite(), m_pxShot->GetX(), m_pxShot->GetY());
+	}
+
+	if (m_pxEnemyShot->IsActive() == true)
+	{
+		m_xSystem.m_pxDrawManager->Draw(m_pxEnemyShot->GetSprite(), m_pxEnemyShot->GetX(), m_pxEnemyShot->GetY());
+	}
+
+	
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
@@ -228,7 +262,7 @@ void GameState::Draw()
 
 IState* GameState::NextState()
 {
-	if (Score == 300)
+	if (Score == 6000)
 	{
 		return (new WinState(m_xSystem));
 	}

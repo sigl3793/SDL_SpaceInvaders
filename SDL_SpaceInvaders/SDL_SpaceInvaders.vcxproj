@@ -23,6 +23,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Defence.cpp" />
     <ClCompile Include="DrawManager.cpp" />
+    <ClCompile Include="EnemyShot.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Defence.h" />
     <ClInclude Include="DrawManager.h" />
+    <ClInclude Include="EnemyShot.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameState.h" />

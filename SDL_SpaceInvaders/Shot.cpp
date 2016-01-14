@@ -81,7 +81,7 @@ EENTITYTYPE Shot::GetType()
 void Shot::Activate()
 {
 	m_bActive = true;
-	m_fSpeed = 1000;
+	m_fSpeed = 1000.0f;
 	m_fDirY = -1.0f;
 }
 void Shot::Deactivate()

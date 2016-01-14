@@ -4,6 +4,7 @@
 class Player;
 class Invader;
 class Shot;
+class EnemyShot;
 class Defence;
 class AnimatedSprite;
 
@@ -22,9 +23,11 @@ private:
 	System m_xSystem;
 	Player* m_pxPlayer;
 	Shot* m_pxShot;
+	EnemyShot* m_pxEnemyShot;
 	std::vector<Defence*> m_apxDefence;
 	Defence* m_pxDefence;
 	std::vector<Invader*> m_apxInvaders;
+	Invader* m_pxInvader;
 	Mix_Chunk* m_xPlopSound;
 	Mix_Music* m_xMusic;
 	int Score;
