@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Invader.h"
 #include "Shot.h"
+#include "Defence.h"
 #include "CollisionManager.h"
 #include "StateManager.h"
 #include "MenuState.h"
@@ -22,7 +23,6 @@ GameState::GameState(System& p_xSystem)
 	m_xSystem = p_xSystem;
 	m_pxPlayer = nullptr;
 	m_pxShot = nullptr;
-	m_pxInvader = nullptr;
 	Score = 0;
 
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
@@ -70,10 +70,20 @@ void GameState::Enter()
 		m_xSystem.m_iScreenWidth,
 		m_xSystem.m_iScreenHeight);
 
-	/*SDL_Rect Box[] =
+	for (int i = 0; i < 7; i++)
 	{
-		{0,0,657,277}
-	};*/
+		for (int j = 0; j < 2; j++)
+		{
+			for (int x = 0; x < 3; x++)
+			{
+				m_pxDefence = new Defence(m_xSystem.m_pxSpriteManager->CreateSprite("../assets/main.bmp", 0, 0, 16, 16),
+					100 + (i*125.0f) + x*16,
+					600 + j * 16.0f);
+				m_apxDefence.push_back(m_pxDefence);
+			}
+		}
+	}
+
 
 	SDL_Rect Waves[] =
 	{
@@ -200,6 +210,20 @@ void GameState::Draw()
 		}
 		it++;
 	}
+
+	auto it2 = m_apxDefence.begin();
+	while (it2 != m_apxDefence.end())
+	{
+		if ((*it2)->IsVisible())
+		{
+			m_xSystem.m_pxDrawManager->Draw(
+				(*it2)->GetSprite(),
+				(*it2)->GetX(),
+				(*it2)->GetY()
+				);
+		}
+		it2++;
+	}
 }
 
 IState* GameState::NextState()
@@ -270,5 +294,28 @@ void GameState::CheckCollision()
 			}
 		}
 		it++;
+	}
+
+	auto it2 = m_apxDefence.begin();
+	while (it2 != m_apxDefence.end())
+	{
+		if ((*it2)->IsVisible())
+		{
+			if (CollisionManager::Check((*it2)->GetCollider(), m_pxShot->GetCollider(), iOverlapX, iOverlapY))
+			{
+				(*it2)->SetVisible(false);
+				if (abs(iOverlapX) > abs(iOverlapY))
+				{
+					m_pxShot->SetPosition(m_pxShot->GetX() - iOverlapX, m_pxShot->GetY());
+					m_pxShot->Deactivate();
+				}
+				else
+				{
+					m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
+					m_pxShot->Deactivate();
+				}
+			}
+		}
+		it2++;
 	}
 }

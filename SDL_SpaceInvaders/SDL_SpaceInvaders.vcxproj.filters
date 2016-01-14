@@ -81,6 +81,9 @@
     <ClCompile Include="WinState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Defence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WinState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Defence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
