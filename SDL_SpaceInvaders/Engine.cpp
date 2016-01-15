@@ -9,6 +9,7 @@
 #include "GameState.h"
 #include "MenuState.h"
 #include "InputManager.h"
+#include "AudioManager.h"
 #include "IState.h"
 #include <iostream>
 #include <ctime>
@@ -25,6 +26,7 @@ Engine::Engine()
 	m_pxMouse = nullptr;
 	m_pxKeyboard = nullptr;
 	m_pxInputManager = nullptr;
+	m_pxAudioManager = nullptr;
 }
 
 Engine::~Engine()
@@ -61,12 +63,17 @@ bool Engine::Initialize()
 
 	m_pxInputManager = new InputManager();
 
+	m_pxAudioManager = new AudioManager();
+
+	//m_pxAudioManager->Initialize();
+
 	m_xSystem.m_iScreenWidth = SCREENWIDTH;
 	m_xSystem.m_iScreenHeight = SCREEHEIGHT;
 	m_xSystem.m_pxDrawManager = m_pxDrawManager;
 	m_xSystem.m_pxSpriteManager = m_pxSpriteManager;
 	m_xSystem.m_pxMouse = m_pxMouse;
 	m_xSystem.m_pxKeyboard = m_pxKeyboard;
+	m_xSystem.m_pxAudioManager = m_pxAudioManager;
 
 	m_pxStateManager->SetState(new MenuState(m_xSystem));
 
@@ -78,6 +85,9 @@ bool Engine::Initialize()
 void Engine::Shutdown()
 {
 	// The shutdown function will quit, delete and shutdown everything we have started up or created in initialize (In reverse order of creation)
+	delete m_pxAudioManager;
+	m_pxAudioManager = nullptr;
+	
 	delete m_pxInputManager;
 	m_pxInputManager = nullptr;
 
@@ -108,6 +118,7 @@ void Engine::Update()
 	{
 		HandleEvents();
 		m_pxDrawManager->Clear();
+		m_pxAudioManager->Initialize();
 		if (m_pxStateManager->Update() == false)
 		{
 			m_bRunning = false;

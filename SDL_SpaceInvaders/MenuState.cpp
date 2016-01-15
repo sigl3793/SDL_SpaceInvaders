@@ -17,7 +17,7 @@ MenuState::MenuState(System& p_xSystem)
 	m_xMusic = nullptr;
 	m_pxMenu = nullptr;
 
-	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+	/*if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
 	{
 		const char* error = Mix_GetError();
 		SDL_Log(error);
@@ -28,7 +28,7 @@ MenuState::MenuState(System& p_xSystem)
 	{
 		const char* error = Mix_GetError();
 		SDL_Log(error);
-	}
+	}*/
 }
 
 MenuState::~MenuState()
@@ -39,7 +39,7 @@ MenuState::~MenuState()
 
 void MenuState::Enter()
 {
-	Mix_PlayMusic(m_xMusic, 0);
+	//Mix_PlayMusic(m_xMusic, 0);
 	
 	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/menu.bmp", 0, 0,1024,768);
 	SDL_Rect* xRect = xSprite->GetRegion();

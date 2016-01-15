@@ -7,6 +7,7 @@ class StateManager;
 class Mouse;
 class Keyboard;
 class InputManager;
+class AudioManager;
 
 class Engine
 {
@@ -39,4 +40,5 @@ private:
 	Mouse* m_pxMouse;
 	Keyboard* m_pxKeyboard;
 	InputManager* m_pxInputManager;
+	AudioManager* m_pxAudioManager;
 };

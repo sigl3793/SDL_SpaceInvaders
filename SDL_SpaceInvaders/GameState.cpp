@@ -14,6 +14,9 @@
 #include "StateManager.h"
 #include "MenuState.h"
 #include "GameOverState.h"
+#include "AudioManager.h"
+#include "SoundClip.h"
+#include "MusicClip.h"
 #include "WinState.h"
 #include <iostream>
 #include "Engine.h"
@@ -25,9 +28,11 @@ GameState::GameState(System& p_xSystem)
 	m_pxPlayer = nullptr;
 	m_pxShot = nullptr;
 	m_pxEnemyShot = nullptr;
+	m_pxSoundClip = nullptr;
+	m_pxAudioManager = nullptr;
 	Score = 0;
 
-	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+	/*if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
 	{
 		const char* error = Mix_GetError();
 		SDL_Log(error);
@@ -45,7 +50,7 @@ GameState::GameState(System& p_xSystem)
 	{
 		const char* error = Mix_GetError();
 		SDL_Log(error);
-	}
+	}*/
 }
 
 GameState::~GameState()
@@ -59,6 +64,8 @@ GameState::~GameState()
 
 void GameState::Enter()
 {
+	m_pxSoundClip = m_xSystem.m_pxAudioManager->CreateSound("../assets/plop.wav");
+
 	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/player.bmp", 0, 0, 60, 20);
 	SDL_Rect* xRect = xSprite->GetRegion();
 	int iHeight = xRect->h;
@@ -139,6 +146,8 @@ void GameState::Enter()
 
 void GameState::Exit()
 {
+	m_xSystem.m_pxAudioManager->DestroySound("../assets/plop.wav");
+
 	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxPlayer->GetSprite());
 	delete m_pxPlayer;
 	m_pxPlayer = nullptr;
@@ -327,6 +336,7 @@ void GameState::CheckCollision()
 					m_pxShot->SetPosition(m_pxShot->GetX() - iOverlapX, m_pxShot->GetY());
 					m_pxShot->Deactivate();
 					Score += 100;
+					m_pxSoundClip->PlaySound();
 					std::cout << "Score:" << Score << std::endl;
 				}
 				else
@@ -334,6 +344,7 @@ void GameState::CheckCollision()
 					m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
 					m_pxShot->Deactivate();
 					Score += 100;
+					m_pxSoundClip->PlaySound();
 					std::cout << "Score:" << Score << std::endl;
 				}
 			}

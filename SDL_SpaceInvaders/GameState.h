@@ -7,6 +7,8 @@ class Shot;
 class EnemyShot;
 class Defence;
 class AnimatedSprite;
+class AudioManager;
+class SoundClip;
 
 class GameState : public IState
 {
@@ -24,7 +26,7 @@ private:
 	Player* m_pxPlayer;
 	Shot* m_pxShot;
 	EnemyShot* m_pxEnemyShot;
-	std::vector<EnemyShot*> m_apxEnemyShot;
+	std::vector<EnemyShot*> m_apxEnemyShot; // ???
 	std::vector<Defence*> m_apxDefence;
 	Defence* m_pxDefence;
 	std::vector<Invader*> m_apxInvaders;
@@ -32,4 +34,7 @@ private:
 	Mix_Chunk* m_xPlopSound;
 	Mix_Music* m_xMusic;
 	int Score;
+
+	SoundClip* m_pxSoundClip;
+	AudioManager* m_pxAudioManager;
 };

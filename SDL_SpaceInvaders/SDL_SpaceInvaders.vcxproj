@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Defence.cpp" />
@@ -35,8 +36,10 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="MusicClip.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shot.cpp" />
+    <ClCompile Include="SoundClip.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="StateManager.cpp" />
@@ -45,6 +48,7 @@
     <ClCompile Include="WinState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Defence.h" />
@@ -61,8 +65,10 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="MusicClip.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Shot.h" />
+    <ClInclude Include="SoundClip.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StateManager.h" />

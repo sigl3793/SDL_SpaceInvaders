@@ -4,6 +4,7 @@ class SpriteManager;
 class DrawManager;
 class Mouse;
 class Keyboard;
+class AudioManager;
 
 // A struct that we create in the Engine so we can send important pointers
 // to potential future states for them to use.
@@ -15,6 +16,7 @@ struct System
 	DrawManager* m_pxDrawManager;
 	Mouse* m_pxMouse;
 	Keyboard* m_pxKeyboard;
+	AudioManager* m_pxAudioManager;
 };
 
 // Interface class, incomplete class with pure virtual functions that need to be
