@@ -2,11 +2,12 @@
 
 #include "IEntity.h"
 class Mouse;
+class InputManager;
 
 class Shot : IEntity
 {
 public:
-	Shot(Mouse* p_pxMouse, Sprite* p_pxSprite, int p_iScreenWidth, int p_iScreenHeight);
+	Shot(InputManager* p_pxInputManager, Sprite* p_pxSprite, int p_iScreenWidth, int p_iScreenHeight);
 	~Shot();
 	void Update(float p_fDeltaTime);
 	Sprite* GetSprite();
@@ -23,6 +24,7 @@ private:
 	Sprite* m_pxSprite;
 	Collider* m_pxCollider;
 	Mouse* m_pxMouse;
+	InputManager* m_pxInputManager;
 	float m_fSpeed;
 	float m_fDirY;
 	float m_fX;

@@ -3,11 +3,12 @@
 #include "Mouse.h"
 #include "Sprite.h"
 #include "Collider.h"
+#include "InputManager.h"
 
-Player::Player(Mouse* p_pxMouse, Sprite* p_pxSprite,
+Player::Player(InputManager* p_pxInputManager, Sprite* p_pxSprite,
 	float p_fX, float p_fY, int p_iScreenWidth)
 {
-	m_pxMouse = p_pxMouse;
+	m_pxInputManager = p_pxInputManager;
 	m_pxSprite = p_pxSprite;
 	m_fX = p_fX;
 	m_fY = p_fY;
@@ -28,7 +29,8 @@ Player::~Player()
 }
 void Player::Update(float p_fDeltaTime)
 {
-	m_fX = m_pxMouse->GetX() - m_pxSprite->GetRegion()->w / 2;
+	m_fX = m_pxInputManager->GetMouse()->GetX() - m_pxSprite->GetRegion()->w / 2;
+	//m_fX = m_pxMouse->GetX() - m_pxSprite->GetRegion()->w / 2;
 	if (m_fX < 0)
 	{
 		m_fX = 0;

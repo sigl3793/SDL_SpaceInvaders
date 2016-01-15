@@ -3,10 +3,11 @@
 #include "Sprite.h"
 #include "Collider.h"
 #include "Mouse.h"
+#include "InputManager.h"
 
-Shot::Shot(Mouse* p_pxMouse, Sprite* p_pxSprite, int p_iScreenWidth, int p_iScreenHeight)
+Shot::Shot(InputManager* p_pxInputManager, Sprite* p_pxSprite, int p_iScreenWidth, int p_iScreenHeight)
 {
-	m_pxMouse = p_pxMouse;
+	m_pxInputManager = p_pxInputManager;
 	m_pxSprite = p_pxSprite;
 	m_iScreenWidth = p_iScreenWidth;
 	m_iScreenHeight = p_iScreenHeight;
@@ -42,10 +43,10 @@ void Shot::Update(float p_fDeltaTime)
 	}
 	else
 	{
-		if (m_pxMouse->IsButtonDown(1))
+		if (m_pxInputManager->GetMouse()->IsButtonDown(1))
 		{
 			Activate();
-			m_pxMouse->SetButton(1,false);
+			m_pxInputManager->GetMouse()->SetButton(1, false);
 		}
 	}
 }

@@ -2,11 +2,12 @@
 
 #include "IEntity.h"
 class Mouse;
+class InputManager;
 
 class Player : public IEntity
 {
 public:
-	Player(Mouse* p_pxMouse, Sprite* p_pxSprite,
+	Player(InputManager* p_pxInputManager, Sprite* p_pxSprite,
 		float p_fX, float p_fY, int p_iScreenWidth);
 	~Player();
 	void Update(float p_fDeltaTime);
@@ -24,6 +25,7 @@ private:
 	Sprite* m_pxSprite;
 	Collider* m_pxCollider;
 	Mouse* m_pxMouse;
+	InputManager* m_pxInputManager;
 	float m_fX;
 	float m_fY;
 	int m_iScreenWidth;

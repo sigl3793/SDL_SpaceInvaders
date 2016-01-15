@@ -10,25 +10,12 @@
 
 InputManager::InputManager()
 {
-	// Kolla vilken state som är aktiv och uppdatera vilka knappar som gör vad
-	m_pxMouse = nullptr;
-	m_pxKeyboard = nullptr;
+	m_pxMouse = new Mouse;
+	m_pxKeyboard = new Keyboard;
 }
 
 
 InputManager::~InputManager()
-{
-
-}
-
-void InputManager::Initialize()
-{
-	m_pxMouse = new Mouse();
-
-	m_pxKeyboard = new Keyboard();
-}
-
-void InputManager::Shutdown()
 {
 	delete m_pxKeyboard;
 	m_pxKeyboard = nullptr;
@@ -37,7 +24,36 @@ void InputManager::Shutdown()
 	m_pxMouse = nullptr;
 }
 
-int InputManager::GetMouseX()
+/*void InputManager::Initialize()
+{
+
+}
+
+void InputManager::Shutdown()
+{
+
+}*/
+
+Keyboard* InputManager::GetKeyboard()
+{
+	return m_pxKeyboard;
+}
+
+void InputManager::SetKeyboard(int key, bool state)
+{
+	m_pxKeyboard->SetKey(key, state);
+}
+
+Mouse* InputManager::GetMouse()
+{
+	return m_pxMouse;
+}
+
+void InputManager::SetMouse(int button, bool state)
+{
+	m_pxMouse->SetButton(button, state);
+}
+/*int InputManager::GetMouseX()
 {
 	return false;
 }
@@ -49,15 +65,17 @@ int InputManager::GetMouseY()
 
 bool InputManager::IsMouseButtonDown(int p_iIndex) 
 { 
-	
+
 	return false;
 }
 
 bool InputManager::IsKeyDown(int p_iIndex) 
 { 
+
 	return false; 
 }
 
-void InputManager::Update()
+void InputManager::Update(float p_fDeltaTime)
 {
-}
+
+}*/

@@ -20,6 +20,7 @@
 #include "WinState.h"
 #include <iostream>
 #include "Engine.h"
+#include "InputManager.h"
 
 
 GameState::GameState(System& p_xSystem)
@@ -69,17 +70,17 @@ void GameState::Enter()
 	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/player.bmp", 0, 0, 60, 20);
 	SDL_Rect* xRect = xSprite->GetRegion();
 	int iHeight = xRect->h;
-	m_pxPlayer = new Player(m_xSystem.m_pxMouse,
+	m_pxPlayer = new Player(m_xSystem.m_pxInputManager,
 		xSprite, 0,
 		m_xSystem.m_iScreenHeight - 20 - iHeight,
 		m_xSystem.m_iScreenWidth);
 
-	m_pxShot = new Shot(m_xSystem.m_pxMouse,
+	m_pxShot = new Shot(m_xSystem.m_pxInputManager,
 		m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invadersgammal.bmp", 73, 2, 3, 9),
 		m_xSystem.m_iScreenWidth,
 		m_xSystem.m_iScreenHeight);
 
-	m_pxEnemyShot = new EnemyShot(m_xSystem.m_pxMouse,
+	m_pxEnemyShot = new EnemyShot(m_xSystem.m_pxInputManager,
 		m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invadersgammal.bmp", 73, 2, 3, 9),
 		m_xSystem.m_iScreenWidth,
 		m_xSystem.m_iScreenHeight);
@@ -219,7 +220,7 @@ bool GameState::Update(float p_fDeltaTime)
 					(*it2)->ReverseDirectionX();
 				}
 			}
-			if (m_xSystem.m_pxMouse->IsButtonDown(2))
+			if (m_xSystem.m_pxInputManager->GetMouse()->IsButtonDown(2))
 			{
 				for (auto it3 = m_apxEnemyShot.begin(); it3 != m_apxEnemyShot.end(); it3++)
 				{

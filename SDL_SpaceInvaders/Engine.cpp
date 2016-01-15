@@ -23,8 +23,8 @@ Engine::Engine()
 	m_pxDrawManager = nullptr;
 	m_pxSpriteManager = nullptr;
 	m_pxStateManager = nullptr;
-	m_pxMouse = nullptr;
-	m_pxKeyboard = nullptr;
+	//m_pxMouse = nullptr;
+	//m_pxKeyboard = nullptr;
 	m_pxInputManager = nullptr;
 	m_pxAudioManager = nullptr;
 }
@@ -53,9 +53,9 @@ bool Engine::Initialize()
 	{
 		return false;
 	}
-	m_pxMouse = new Mouse();
+	//m_pxMouse = new Mouse();
 
-	m_pxKeyboard = new Keyboard();
+	//m_pxKeyboard = new Keyboard();
 
 	m_pxSpriteManager = new SpriteManager(m_pxDrawManager->GetRenderer());
 
@@ -65,8 +65,6 @@ bool Engine::Initialize()
 
 	m_pxAudioManager = new AudioManager();
 
-	//m_pxAudioManager->Initialize();
-
 	m_xSystem.m_iScreenWidth = SCREENWIDTH;
 	m_xSystem.m_iScreenHeight = SCREEHEIGHT;
 	m_xSystem.m_pxDrawManager = m_pxDrawManager;
@@ -74,6 +72,7 @@ bool Engine::Initialize()
 	m_xSystem.m_pxMouse = m_pxMouse;
 	m_xSystem.m_pxKeyboard = m_pxKeyboard;
 	m_xSystem.m_pxAudioManager = m_pxAudioManager;
+	m_xSystem.m_pxInputManager = m_pxInputManager;
 
 	m_pxStateManager->SetState(new MenuState(m_xSystem));
 
@@ -119,6 +118,7 @@ void Engine::Update()
 		HandleEvents();
 		m_pxDrawManager->Clear();
 		m_pxAudioManager->Initialize();
+		m_pxInputManager;
 		if (m_pxStateManager->Update() == false)
 		{
 			m_bRunning = false;
@@ -140,24 +140,32 @@ void Engine::HandleEvents()
 		}
 		else if (xEvent.type == SDL_MOUSEBUTTONDOWN)
 		{
-			m_pxMouse->SetButton(xEvent.button.button, true);
+			//m_pxMouse->SetButton(xEvent.button.button, true);
+			//m_pxInputManager->SetMouse(xEvent.button.button, true);
+			m_pxInputManager->GetMouse()->SetButton(xEvent.button.button, true);
 		}
 		else if (xEvent.type == SDL_MOUSEBUTTONUP)
 		{
-			m_pxMouse->SetButton(xEvent.button.button, false);
+			//m_pxMouse->SetButton(xEvent.button.button, false);
+			//m_pxInputManager->SetMouse(xEvent.button.button, false);
+			m_pxInputManager->GetMouse()->SetButton(xEvent.button.button, false);
 		}
 		else if (xEvent.type == SDL_MOUSEMOTION)
 		{
-			m_pxMouse->SetPosition(xEvent.motion.x, xEvent.motion.y);
+			//m_pxMouse->SetPosition(xEvent.motion.x, xEvent.motion.y);
+			m_pxInputManager->GetMouse()->SetPosition(xEvent.motion.x, xEvent.motion.y);
 		}
 		else if (xEvent.type == SDL_KEYDOWN)
 		{
-			m_pxKeyboard->SetKey(xEvent.button.button, true);
-			//m_pxStateManager->SetState(new MenuState(m_xSystem));
+			//m_pxKeyboard->SetKey(xEvent.button.button, true);
+			//m_pxInputManager->SetKeyboard(xEvent.button.button, true);
+			m_pxInputManager->GetKeyboard()->SetKey(xEvent.button.button, true);
 		}
 		else if (xEvent.type == SDL_KEYUP)
 		{
-			m_pxKeyboard->SetKey(xEvent.button.button, false);
+			//m_pxKeyboard->SetKey(xEvent.button.button, false);
+			//m_pxInputManager->SetKeyboard(xEvent.button.button, false);
+			m_pxInputManager->GetKeyboard()->SetKey(xEvent.button.button, false);
 		}
 	}
 }

@@ -10,6 +10,7 @@
 #include "Menu.h"
 #include "GameState.h"
 #include "IState.h"
+#include "InputManager.h"
 
 MenuState::MenuState(System& p_xSystem)
 {
@@ -55,7 +56,7 @@ void MenuState::Exit()
 
 bool MenuState::Update(float p_fDeltaTime)
 {
-	if (m_xSystem.m_pxKeyboard->IsKeyDown(41))
+	/*if (m_xSystem.m_pxKeyboard->IsKeyDown(41))
 	{
 		m_xSystem.m_pxKeyboard->SetKey(41, false);
 		SDL_Quit();
@@ -66,7 +67,21 @@ bool MenuState::Update(float p_fDeltaTime)
 		return false;
 	}
 	else
+		return true;*/
+	if (m_xSystem.m_pxInputManager->GetKeyboard()->IsKeyDown(41))
+	{
+		m_xSystem.m_pxInputManager->SetKeyboard(41, false);
+		SDL_Quit();
+	}
+	if (m_xSystem.m_pxInputManager->GetKeyboard()->IsKeyDown(40))
+	{
+		m_xSystem.m_pxInputManager->SetKeyboard(40, false);
+		return false;
+	}
+	else
+	{
 		return true;
+	}
 }
 
 void MenuState::Draw()
