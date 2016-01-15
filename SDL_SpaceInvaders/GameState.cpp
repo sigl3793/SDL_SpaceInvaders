@@ -150,6 +150,15 @@ void GameState::Exit()
 	delete m_pxEnemyShot;
 	m_pxEnemyShot = nullptr;
 
+	auto it2 = m_apxDefence.begin();
+	while (it2 != m_apxDefence.end())
+	{
+		m_xSystem.m_pxSpriteManager->DestroySprite((*it2)->GetSprite());
+		delete (*it2);
+		it2++;
+	}
+	m_apxDefence.clear();
+
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
@@ -174,6 +183,7 @@ bool GameState::Update(float p_fDeltaTime)
 	{
 		m_pxShot->Deactivate();
 	}
+
 
 	m_pxEnemyShot->Update(p_fDeltaTime);
 	if (m_pxEnemyShot->IsActive() == false)
@@ -224,13 +234,11 @@ void GameState::Draw()
 	{
 		m_xSystem.m_pxDrawManager->Draw(m_pxShot->GetSprite(), m_pxShot->GetX(), m_pxShot->GetY());
 	}
-
-	if (m_pxEnemyShot->IsActive() == true)
+	/*if (m_pxEnemyShot->IsActive() == true)
 	{
 		m_xSystem.m_pxDrawManager->Draw(m_pxEnemyShot->GetSprite(), m_pxEnemyShot->GetX(), m_pxEnemyShot->GetY());
-	}
+	}*/
 
-	
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
@@ -241,6 +249,17 @@ void GameState::Draw()
 				(*it)->GetX(),
 				(*it)->GetY()
 				);
+			m_xSystem.m_pxDrawManager->Draw(
+				m_pxEnemyShot->GetSprite(),
+				m_pxEnemyShot->GetX(),
+				m_pxEnemyShot->GetY()
+				);
+			if (m_pxEnemyShot->IsActive() == false)
+			{
+				m_pxEnemyShot->SetPosition((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w / 2 + m_pxEnemyShot->GetSprite()->GetRegion()->w / 2,
+					(*it)->GetY() + (*it)->GetSprite()->GetRegion()->h / 2 + m_pxEnemyShot->GetSprite()->GetRegion()->h / 2);
+			}
+			
 		}
 		it++;
 	}

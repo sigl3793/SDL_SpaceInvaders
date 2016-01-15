@@ -10,8 +10,8 @@ EnemyShot::EnemyShot(Mouse* p_pxMouse,Sprite* p_pxSprite, int p_iScreenWidth, in
 	m_pxSprite = p_pxSprite;
 	m_iScreenWidth = p_iScreenWidth;
 	m_iScreenHeight = p_iScreenHeight;
-	m_fSpeed = 0.0f;
-	m_fDirY = 0.0f;
+	m_fSpeed = 100.0f;
+	m_fDirY = -1.0f;
 	m_fX = 0.0f;
 	m_fY = 0.0f;
 	m_bVisible = false;

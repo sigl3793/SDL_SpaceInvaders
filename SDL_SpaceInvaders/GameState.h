@@ -24,6 +24,7 @@ private:
 	Player* m_pxPlayer;
 	Shot* m_pxShot;
 	EnemyShot* m_pxEnemyShot;
+	std::vector<EnemyShot*> m_apxEnemyShot;
 	std::vector<Defence*> m_apxDefence;
 	Defence* m_pxDefence;
 	std::vector<Invader*> m_apxInvaders;

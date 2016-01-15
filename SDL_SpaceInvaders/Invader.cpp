@@ -5,6 +5,8 @@
 #include "Engine.h"
 #include <iostream>
 
+//int ammo = 5;
+
 Invader::Invader(Sprite* p_pxSprite,
 	float p_fX, float p_fY)
 {
@@ -37,6 +39,12 @@ Invader::~Invader()
 
 void Invader::Update(float p_fDeltaTime)
 {	
+	/*int chance = rand() % 100 + 1;
+	if (chance > 75)
+	{
+		ammo -= 1;
+	}*/
+
 	if (m_bActive)
 	{
 		//SDL_Log("Position X:%f Y:%f", m_fX, m_fY);

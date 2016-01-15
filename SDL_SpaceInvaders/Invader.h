@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IEntity.h"
+//extern int ammo;
 
 class Invader : public IEntity
 {
