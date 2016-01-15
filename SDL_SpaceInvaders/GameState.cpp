@@ -76,6 +76,7 @@ void GameState::Enter()
 		m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invadersgammal.bmp", 73, 2, 3, 9),
 		m_xSystem.m_iScreenWidth,
 		m_xSystem.m_iScreenHeight);
+	m_apxEnemyShot.push_back(m_pxEnemyShot);
 
 	for (int i = 0; i < 7; i++)
 	{
@@ -185,12 +186,12 @@ bool GameState::Update(float p_fDeltaTime)
 	}
 
 
-	m_pxEnemyShot->Update(p_fDeltaTime);
-	if (m_pxEnemyShot->IsActive() == false)
+	//m_pxEnemyShot->Update(p_fDeltaTime);
+	/*if (m_pxEnemyShot->IsActive() == false)
 	{
 		m_pxEnemyShot->SetPosition(m_pxInvader->GetX() + m_pxInvader->GetSprite()->GetRegion()->w / 2 - m_pxEnemyShot->GetSprite()->GetRegion()->w / 2,
 			m_pxInvader->GetY() - m_pxInvader->GetSprite()->GetRegion()->h / 2 - m_pxEnemyShot->GetSprite()->GetRegion()->h / 2);
-	}
+	}*/
 	if (m_pxEnemyShot->GetY() > m_xSystem.m_iScreenHeight)
 	{
 		m_pxEnemyShot->Deactivate();
@@ -207,6 +208,14 @@ bool GameState::Update(float p_fDeltaTime)
 				for (auto it2 = m_apxInvaders.begin(); it2 != m_apxInvaders.end(); it2++)
 				{
 					(*it2)->ReverseDirectionX();
+				}
+			}
+			if (m_xSystem.m_pxMouse->IsButtonDown(2))
+			{
+				for (auto it3 = m_apxEnemyShot.begin(); it3 != m_apxEnemyShot.end(); it3++)
+				{
+					//m_pxEnemyShot->Activate();
+					m_pxEnemyShot->Update(p_fDeltaTime);
 				}
 			}
 			if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h >  m_xSystem.m_iScreenHeight)
@@ -234,6 +243,16 @@ void GameState::Draw()
 	{
 		m_xSystem.m_pxDrawManager->Draw(m_pxShot->GetSprite(), m_pxShot->GetX(), m_pxShot->GetY());
 	}
+
+	/*auto it3 = m_apxEnemyShot.begin();
+	while (it3 != m_apxEnemyShot.end())
+	{
+		if ((*it3)->IsActive() == true)
+		{
+			m_xSystem.m_pxDrawManager->Draw((*it3)->GetSprite(), (*it3)->GetX(), (*it3)->GetY());
+		}
+		it3++;
+	}*/
 	/*if (m_pxEnemyShot->IsActive() == true)
 	{
 		m_xSystem.m_pxDrawManager->Draw(m_pxEnemyShot->GetSprite(), m_pxEnemyShot->GetX(), m_pxEnemyShot->GetY());
