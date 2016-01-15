@@ -47,18 +47,14 @@ void AudioManager::Shutdown()
 
 SoundClip* AudioManager::CreateSound(const std::string& p_sFilepath)
 {
-	// First we try to find the texture in our std::map
 	auto it = m_apxSoundCunks.find(p_sFilepath);
 	if (it == m_apxSoundCunks.end())
 	{
-		// If we don't find the texture we need to load it and insert it in to our std::map so
-		// that we may create pointers to the same texture for several chunks.
 		Mix_Chunk* m_xChunk = Mix_LoadWAV(p_sFilepath.c_str());
 		m_apxSoundCunks.insert(std::pair<std::string, Mix_Chunk*>(p_sFilepath, m_xChunk));
 		it = m_apxSoundCunks.find(p_sFilepath);
 	}
 	SoundClip* xSound = new SoundClip(it->second);
-	//m_apxSoundClips.push_back(xSound); ?
 	return xSound;
 }
 
@@ -72,7 +68,6 @@ MusicClip* AudioManager::CreateMusic(const std::string& p_sFilepath)
 		it = m_apxMusicChunks.find(p_sFilepath);
 	}
 	MusicClip* xMusic = new MusicClip((it->second));
-	//m_apxMusicClips.push_back(xMusic); ?
 	return xMusic;
 }
 
