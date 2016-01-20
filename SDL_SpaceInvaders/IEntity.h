@@ -1,7 +1,5 @@
 #pragma once
 
-// If we want to make more entity types we can keep adding it to this list, this is to distinguish what they really are if we
-// store different class* that inherit from IEntity in an IEntity* vector for example.
 enum EENTITYTYPE
 {
 	ENTITY_PLAYER,

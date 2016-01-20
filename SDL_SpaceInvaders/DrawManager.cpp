@@ -35,8 +35,6 @@ bool DrawManager::Initialize(int p_iWidht, int p_iHeight)
 		return false;
 	}
 
-	// Sets the drawcolor which in our project will only affect the color we use when clearing the screen, unlike the earlier program Pong we
-	// now draw Textures which allready have their own defined color for each pixel.
 	SDL_SetRenderDrawColor(m_pxRenderer,
 		0x00, 0x00, 0x00, 0xff);
 
@@ -46,7 +44,6 @@ bool DrawManager::Initialize(int p_iWidht, int p_iHeight)
 
 void DrawManager::Shutdown()
 {
-	// Delete and destroy everything that was created in Initialize in the reverse order.
 	SDL_DestroyRenderer(m_pxRenderer);
 
 	SDL_DestroyWindow(m_pxWindow);
@@ -66,13 +63,14 @@ void DrawManager::Draw(Sprite* p_pxSprite, int p_iX, int p_iY)
 {
 	// Creates a destination rect by combining the position parameters with the Sprite region data. This is later used to know where and how big will
 	// render thic picture.
-	SDL_Rect rect = { p_iX, p_iY,
-		p_pxSprite->GetRegion()->w, p_pxSprite->GetRegion()->h };
+	SDL_Rect rect = 
+	{
+		p_iX, p_iY, p_pxSprite->GetRegion()->w, p_pxSprite->GetRegion()->h 
+	};
 
 	// RenderCopy renders a source rectangle from a texture to a target rectangle on a renderer. Then we render the piece the Sprites Region specifies
 	// of the Sprites SDL_Texture to the correct destination we created earlier.
-	SDL_RenderCopy(m_pxRenderer, p_pxSprite->GetTexture(),
-		p_pxSprite->GetRegion(), &rect);
+	SDL_RenderCopy(m_pxRenderer, p_pxSprite->GetTexture(), p_pxSprite->GetRegion(), &rect);
 }
 
 SDL_Renderer* DrawManager::GetRenderer()

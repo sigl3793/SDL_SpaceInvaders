@@ -11,6 +11,7 @@ public:
 	Sprite* GetSprite();
 	float GetX();
 	float GetY();
+
 private:
 	Sprite* m_pxSprite;
 	Mouse* m_pxMouse;

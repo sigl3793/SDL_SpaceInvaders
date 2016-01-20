@@ -1,14 +1,14 @@
 #pragma once
 
 #include "IEntity.h"
+
 class Mouse;
 class InputManager;
 
 class Player : public IEntity
 {
 public:
-	Player(InputManager* p_pxInputManager, Sprite* p_pxSprite,
-		float p_fX, float p_fY, int p_iScreenWidth);
+	Player(InputManager* p_pxInputManager, Sprite* p_pxSprite, float p_fX, float p_fY, int p_iScreenWidth);
 	~Player();
 	void Update(float p_fDeltaTime);
 	Sprite* GetSprite();
@@ -17,8 +17,6 @@ public:
 	float GetY();
 	bool IsVisible();
 	EENTITYTYPE GetType();
-
-	//void Shoot(bool p_bShoot);
 
 private:
 	Player() {};
@@ -30,6 +28,4 @@ private:
 	float m_fY;
 	int m_iScreenWidth;
 	bool m_bVisible;
-
-	//bool m_bShoot;
 };

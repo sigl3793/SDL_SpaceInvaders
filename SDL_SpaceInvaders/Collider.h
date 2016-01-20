@@ -12,8 +12,9 @@ public:
 	int GetY();
 	int GetW();
 	int GetH();
-	void SetParent(IEntity* p_pxParent); // Sets the parent Entity
-	void Refresh(); // If the collider has a parent entity it will set its position to the parents position
+	void SetParent(IEntity* p_pxParent); 
+	void Refresh();
+
 private:
 	Collider() {};
 	IEntity* m_pxParent;

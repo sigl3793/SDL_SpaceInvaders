@@ -23,15 +23,12 @@ Engine::Engine()
 	m_pxDrawManager = nullptr;
 	m_pxSpriteManager = nullptr;
 	m_pxStateManager = nullptr;
-	//m_pxMouse = nullptr;
-	//m_pxKeyboard = nullptr;
 	m_pxInputManager = nullptr;
 	m_pxAudioManager = nullptr;
 }
 
 Engine::~Engine()
 {
-
 }
 
 
@@ -53,9 +50,6 @@ bool Engine::Initialize()
 	{
 		return false;
 	}
-	//m_pxMouse = new Mouse();
-
-	//m_pxKeyboard = new Keyboard();
 
 	m_pxSpriteManager = new SpriteManager(m_pxDrawManager->GetRenderer());
 
@@ -84,6 +78,7 @@ bool Engine::Initialize()
 void Engine::Shutdown()
 {
 	// The shutdown function will quit, delete and shutdown everything we have started up or created in initialize (In reverse order of creation)
+	m_pxAudioManager->Shutdown();
 	delete m_pxAudioManager;
 	m_pxAudioManager = nullptr;
 	
@@ -96,13 +91,6 @@ void Engine::Shutdown()
 	delete m_pxSpriteManager;
 	m_pxSpriteManager = nullptr;
 
-	delete m_pxKeyboard;
-	m_pxKeyboard = nullptr;
-
-	delete m_pxMouse;
-	m_pxMouse = nullptr;
-
-	// Shuts down the drawmanager before deleting the object and nulling the pointer.
 	m_pxDrawManager->Shutdown();
 	delete m_pxDrawManager;
 	m_pxDrawManager = nullptr;
@@ -140,31 +128,22 @@ void Engine::HandleEvents()
 		}
 		else if (xEvent.type == SDL_MOUSEBUTTONDOWN)
 		{
-			//m_pxMouse->SetButton(xEvent.button.button, true);
-			//m_pxInputManager->SetMouse(xEvent.button.button, true);
 			m_pxInputManager->GetMouse()->SetButton(xEvent.button.button, true);
 		}
 		else if (xEvent.type == SDL_MOUSEBUTTONUP)
 		{
-			//m_pxMouse->SetButton(xEvent.button.button, false);
-			//m_pxInputManager->SetMouse(xEvent.button.button, false);
 			m_pxInputManager->GetMouse()->SetButton(xEvent.button.button, false);
 		}
 		else if (xEvent.type == SDL_MOUSEMOTION)
 		{
-			//m_pxMouse->SetPosition(xEvent.motion.x, xEvent.motion.y);
 			m_pxInputManager->GetMouse()->SetPosition(xEvent.motion.x, xEvent.motion.y);
 		}
 		else if (xEvent.type == SDL_KEYDOWN)
 		{
-			//m_pxKeyboard->SetKey(xEvent.button.button, true);
-			//m_pxInputManager->SetKeyboard(xEvent.button.button, true);
 			m_pxInputManager->GetKeyboard()->SetKey(xEvent.button.button, true);
 		}
 		else if (xEvent.type == SDL_KEYUP)
 		{
-			//m_pxKeyboard->SetKey(xEvent.button.button, false);
-			//m_pxInputManager->SetKeyboard(xEvent.button.button, false);
 			m_pxInputManager->GetKeyboard()->SetKey(xEvent.button.button, false);
 		}
 	}

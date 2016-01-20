@@ -21,6 +21,7 @@ EnemyShot::EnemyShot(InputManager* p_pxInputManager,Sprite* p_pxSprite, int p_iS
 		m_pxSprite->GetRegion()->w,
 		m_pxSprite->GetRegion()->h);
 	m_pxCollider->SetParent(this);
+	srand(time(0));
 }
 
 EnemyShot::~EnemyShot()
@@ -31,6 +32,7 @@ EnemyShot::~EnemyShot()
 
 void EnemyShot::Update(float p_fDeltaTime)
 {
+	int shoot = 1 + (rand() % 5000);
 	if (m_bActive)
 	{
 		m_fY += m_fDirY * m_fSpeed * p_fDeltaTime;
@@ -41,13 +43,9 @@ void EnemyShot::Update(float p_fDeltaTime)
 		}
 		m_pxCollider->Refresh();
 	}
-	else
+	if (shoot == 1)
 	{
-		if (m_pxInputManager->GetMouse()->IsButtonDown(2))
-		{
-			Activate();
-			m_pxInputManager->GetMouse()->SetButton(2, false);
-		}
+		Activate();
 	}
 }
 
@@ -89,7 +87,7 @@ EENTITYTYPE EnemyShot::GetType()
 void EnemyShot::Activate()
 {
 	m_bActive = true;
-	m_fSpeed = 1000.0f;
+	m_fSpeed = 500.0f;
 	m_fDirY = 1.0f;
 }
 

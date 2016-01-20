@@ -1,19 +1,19 @@
 #include "stdafx.h"
 #include "MusicClip.h"
 
-MusicClip::MusicClip(Mix_Music* pxMusic) : m_pxMusic(pxMusic)
+MusicClip::MusicClip(Mix_Music* p_pxMusic)
 {
-
+	m_pxMusic = p_pxMusic;
+	int p_iLoop = -1;
 }
 
 MusicClip::~MusicClip()
 {
-
 }
 
-void MusicClip::PlayMusic(int p_fLoop)
+void MusicClip::PlayMusic(int p_iLoop)
 {
-	Mix_PlayMusic(m_pxMusic, p_fLoop);
+	Mix_PlayMusic(m_pxMusic, p_iLoop);
 }
 
 void MusicClip::StopMusic()

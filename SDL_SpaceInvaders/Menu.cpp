@@ -12,7 +12,6 @@ Menu::Menu(Mouse* p_pxMouse, Sprite* p_pxSprite,float p_fX, float p_fY, int p_iS
 
 Menu::~Menu()
 {
-	
 }
 
 Sprite* Menu::GetSprite()

@@ -10,25 +10,16 @@
 #include "Menu.h"
 #include "WinState.h"
 #include "IState.h"
+#include "InputManager.h"
+#include "AudioManager.h"
+#include "SoundClip.h"
 
 WinState::WinState(System& p_xSystem)
 {
 	m_xSystem = p_xSystem;
 	m_xMusic = nullptr;
 	m_pxMenu = nullptr;
-
-	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
-	{
-		const char* error = Mix_GetError();
-		SDL_Log(error);
-	}
-
-	m_xMusic = Mix_LoadMUS("../assets/batmetal.wav");
-	if (m_xMusic == nullptr)
-	{
-		const char* error = Mix_GetError();
-		SDL_Log(error);
-	}
+	m_pxSoundClip = nullptr;
 }
 
 WinState::~WinState()
@@ -39,7 +30,9 @@ WinState::~WinState()
 
 void WinState::Enter()
 {
-	Mix_PlayMusic(m_xMusic, 0);
+	m_pxSoundClip = m_xSystem.m_pxAudioManager->CreateSound("../assets/win.wav");
+
+	m_pxSoundClip->PlaySound();
 
 	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/Win.bmp", 0, 0, 1024, 768);
 	SDL_Rect* xRect = xSprite->GetRegion();
@@ -51,14 +44,15 @@ void WinState::Exit()
 	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxMenu->GetSprite());
 	delete m_pxMenu;
 	m_pxMenu = nullptr;
+
+	m_xSystem.m_pxAudioManager->DestroySound("../assets/win.wav");
 }
 
 bool WinState::Update(float p_fDeltaTime)
 {
-	if (m_xSystem.m_pxKeyboard->IsKeyDown(41))
+	if (m_xSystem.m_pxInputManager->GetKeyboard()->IsKeyDown(41))
 	{
-		m_xSystem.m_pxKeyboard->SetKey(41, false);
-		SDL_Quit();
+		SDL_QUIT;
 	}
 	return true;
 }

@@ -21,6 +21,7 @@ Shot::Shot(InputManager* p_pxInputManager, Sprite* p_pxSprite, int p_iScreenWidt
 		m_pxSprite->GetRegion()->w,
 		m_pxSprite->GetRegion()->h);
 	m_pxCollider->SetParent(this);
+	
 }
 
 Shot::~Shot()
@@ -55,40 +56,49 @@ Sprite* Shot::GetSprite()
 {
 	return m_pxSprite;
 }
+
 Collider* Shot::GetCollider()
 {
 	return m_pxCollider;
 }
+
 float Shot::GetX()
 {
 	return m_fX;
 }
+
 float Shot::GetY()
 {
 	return m_fY;
 }
+
 bool Shot::IsVisible()
 {
 	return m_bVisible;
 }
+
 bool Shot::IsActive()
 {
 	return m_bActive;
 }
+
 EENTITYTYPE Shot::GetType()
 {
 	return EENTITYTYPE::ENTITY_SHOT;
 }
+
 void Shot::Activate()
 {
 	m_bActive = true;
 	m_fSpeed = 1000.0f;
 	m_fDirY = -1.0f;
 }
+
 void Shot::Deactivate()
 {
 	m_bActive = false;
 }
+
 void Shot::SetPosition(float p_fX, float p_fY)
 {
 	m_fX = p_fX;

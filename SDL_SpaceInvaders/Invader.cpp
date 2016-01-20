@@ -3,9 +3,6 @@
 #include "Collider.h"
 #include "Sprite.h"
 #include "Engine.h"
-#include <iostream>
-
-//int ammo = 5;
 
 Invader::Invader(Sprite* p_pxSprite,
 	float p_fX, float p_fY)
@@ -19,16 +16,15 @@ Invader::Invader(Sprite* p_pxSprite,
 		m_pxSprite->GetRegion()->h);
 	m_pxCollider->SetParent(this);
 	m_pxCollider->Refresh();
-
 	m_bActive = true;
 	m_fSpeed = 0.0f;
 	m_fISpeed = 0.0f;
-	m_fDirX = 1.0f;
+	m_fDirX = 0.75f;
 	m_fDirY = 0.0f;
 	m_iScreenHeight = 768;
 	m_iScreenWidth = 1024;
-	
 	m_bIncrease = false;
+	m_bIncreaseAgain = false;
 }
 
 Invader::~Invader()
@@ -39,15 +35,8 @@ Invader::~Invader()
 
 void Invader::Update(float p_fDeltaTime)
 {	
-	/*int chance = rand() % 100 + 1;
-	if (chance > 75)
-	{
-		ammo -= 1;
-	}*/
-
 	if (m_bActive)
 	{
-		//SDL_Log("Position X:%f Y:%f", m_fX, m_fY);
 		m_fX += m_fDirX * (m_fSpeed+m_fISpeed) * p_fDeltaTime;
 		m_pxCollider->Refresh();
 	}
@@ -125,5 +114,11 @@ void Invader::ReverseDirectionX()
 bool Invader::IncreaseSpeed()
 {
 	m_fISpeed = 50.0f;
+	return m_bIncrease;
+}
+
+bool Invader::IncreaseSpeedAgain()
+{
+	m_fISpeed = 100.0f;
 	return m_bIncrease;
 }

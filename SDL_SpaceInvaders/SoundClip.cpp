@@ -8,7 +8,6 @@ SoundClip::SoundClip(Mix_Chunk* p_pxClip)
 
 SoundClip::~SoundClip()
 {
-
 }
 
 void SoundClip::PlaySound()

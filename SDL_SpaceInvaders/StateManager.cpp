@@ -23,8 +23,6 @@ StateManager::~StateManager()
 
 bool StateManager::Update()
 {
-	// Calculate the time between this frame and previous frame by
-	// deducting current ticks with what ticks were the last update call.
 	float fDeltaTime =
 		(SDL_GetTicks() - m_iLastTick)
 		* 0.001f;
@@ -37,7 +35,6 @@ bool StateManager::Update()
 		}
 	}
 
-	// Save this frames tick in m_iLastTick to be used the next update call
 	m_iLastTick = SDL_GetTicks();
 	return true;
 }

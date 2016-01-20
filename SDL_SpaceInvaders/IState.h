@@ -7,8 +7,6 @@ class Keyboard;
 class AudioManager;
 class InputManager;
 
-// A struct that we create in the Engine so we can send important pointers
-// to potential future states for them to use.
 struct System
 {
 	int m_iScreenWidth;
@@ -21,9 +19,6 @@ struct System
 	InputManager* m_pxInputManager;
 };
 
-// Interface class, incomplete class with pure virtual functions that need to be
-// both declared and defines in derived classes. Only virtual will give the option
-// to declare and define the function while pure virtual forces it.
 class IState
 {
 public:

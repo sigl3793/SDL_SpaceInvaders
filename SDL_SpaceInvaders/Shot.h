@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IEntity.h"
+
 class Mouse;
 class InputManager;
 
@@ -20,6 +21,7 @@ public:
 	void Activate();
 	void Deactivate();
 	void SetPosition(float p_fX, float p_fY);
+
 private:
 	Sprite* m_pxSprite;
 	Collider* m_pxCollider;

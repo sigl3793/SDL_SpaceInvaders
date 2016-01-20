@@ -6,7 +6,6 @@
 #include "Mouse.h"
 #include "Shot.h"
 #include "Keyboard.h"
-#include <iostream>
 
 InputManager::InputManager()
 {
@@ -23,16 +22,6 @@ InputManager::~InputManager()
 	delete m_pxMouse;
 	m_pxMouse = nullptr;
 }
-
-/*void InputManager::Initialize()
-{
-
-}
-
-void InputManager::Shutdown()
-{
-
-}*/
 
 Keyboard* InputManager::GetKeyboard()
 {
@@ -53,29 +42,3 @@ void InputManager::SetMouse(int button, bool state)
 {
 	m_pxMouse->SetButton(button, state);
 }
-/*int InputManager::GetMouseX()
-{
-	return false;
-}
-
-int InputManager::GetMouseY()
-{
-	return false;
-}
-
-bool InputManager::IsMouseButtonDown(int p_iIndex) 
-{ 
-
-	return false;
-}
-
-bool InputManager::IsKeyDown(int p_iIndex) 
-{ 
-
-	return false; 
-}
-
-void InputManager::Update(float p_fDeltaTime)
-{
-
-}*/

@@ -2,8 +2,7 @@
 #include "Collider.h"
 #include "IEntity.h"
 
-Collider::Collider(int p_iWidth,
-	int p_iHeight)
+Collider::Collider(int p_iWidth, int p_iHeight)
 {
 	m_xRegion.x = 0;
 	m_xRegion.y = 0;
@@ -11,14 +10,14 @@ Collider::Collider(int p_iWidth,
 	m_xRegion.h = p_iHeight;
 	m_pxParent = nullptr;
 }
-void Collider::SetPosition(int p_iX,
-	int p_iY)
+
+void Collider::SetPosition(int p_iX, int p_iY)
 {
 	m_xRegion.x = p_iX;
 	m_xRegion.y = p_iY;
 }
-void Collider::SetSize(int p_iWidth,
-	int p_iHeight)
+
+void Collider::SetSize(int p_iWidth, int p_iHeight)
 {
 	if (p_iWidth < 0)
 		p_iWidth = 0;
@@ -27,18 +26,22 @@ void Collider::SetSize(int p_iWidth,
 	m_xRegion.w = p_iWidth;
 	m_xRegion.h = p_iHeight;
 }
+
 int Collider::GetX()
 {
 	return m_xRegion.x;
-};
+}
+
 int Collider::GetY()
 {
 	return m_xRegion.y;
 }
+
 int Collider::GetW()
 {
 	return m_xRegion.w;
 }
+
 int Collider::GetH()
 {
 	return m_xRegion.h;

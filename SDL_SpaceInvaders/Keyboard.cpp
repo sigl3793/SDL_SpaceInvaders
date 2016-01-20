@@ -11,7 +11,6 @@ Keyboard::Keyboard()
 
 Keyboard::~Keyboard()
 {
-
 }
 
 bool Keyboard::IsKeyDown(int p_iIndex)
@@ -24,8 +23,7 @@ bool Keyboard::IsKeyDown(int p_iIndex)
 	return m_abKeys[p_iIndex];
 }
 
-void Keyboard::SetKey(int p_iIndex,
-	bool p_bValue)
+void Keyboard::SetKey(int p_iIndex, bool p_bValue)
 {
 	if (p_iIndex < 0)
 		return;

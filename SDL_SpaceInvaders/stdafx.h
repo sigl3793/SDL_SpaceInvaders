@@ -6,14 +6,11 @@
 #pragma once
 
 #include "targetver.h"
-
 #include <stdio.h>
 #include <tchar.h>
-
-
-
-// TODO: reference additional headers your program requires here
-
+#include <cstdlib>
+#include <iostream>
+#include <ctime>
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <string>

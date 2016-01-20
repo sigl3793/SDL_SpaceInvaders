@@ -8,7 +8,7 @@ Sprite::Sprite(SDL_Texture* p_pxTexture)
 	m_xRegion.y = 0;
 	m_xRegion.w = 0;
 	m_xRegion.h = 0;
-};
+}
 
 Sprite::Sprite(SDL_Texture* p_pxTexture, int p_iX, int p_iY, int p_iW, int p_iH)
 {
@@ -21,14 +21,14 @@ Sprite::Sprite(SDL_Texture* p_pxTexture, int p_iX, int p_iY, int p_iW, int p_iH)
 
 Sprite::~Sprite()
 {
-};
+}
 
 SDL_Texture* Sprite::GetTexture()
 {
 	return m_pxTexture;
-};
+}
 
 SDL_Rect* Sprite::GetRegion()
 {
 	return &m_xRegion;
-};
+}

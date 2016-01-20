@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IState.h"
+
 class Player;
 class Invader;
 class Shot;
@@ -9,6 +10,9 @@ class Defence;
 class AnimatedSprite;
 class AudioManager;
 class SoundClip;
+class MusicClip;
+class Hud;
+class Sprite;
 
 class GameState : public IState
 {
@@ -20,21 +24,24 @@ public:
 	bool Update(float p_fDeltaTime);
 	void Draw();
 	IState* NextState();
+
 private:
+	int Score;
+	int Lives;
 	void CheckCollision();
 	System m_xSystem;
 	Player* m_pxPlayer;
 	Shot* m_pxShot;
 	EnemyShot* m_pxEnemyShot;
-	std::vector<EnemyShot*> m_apxEnemyShot; // ???
-	std::vector<Defence*> m_apxDefence;
 	Defence* m_pxDefence;
-	std::vector<Invader*> m_apxInvaders;
 	Invader* m_pxInvader;
-	Mix_Chunk* m_xPlopSound;
-	Mix_Music* m_xMusic;
-	int Score;
-
-	SoundClip* m_pxSoundClip;
-	AudioManager* m_pxAudioManager;
+	std::vector<EnemyShot*> m_apxEnemyShot;
+	std::vector<Defence*> m_apxDefence;
+	std::vector<Invader*> m_apxInvaders;
+	SoundClip* m_pxSoundClip1;
+	SoundClip* m_pxSoundClip2;
+	SoundClip* m_pxSoundClip3;
+	Hud* m_pxHud1;
+	Hud* m_pxHud2;
+	Hud* m_pxHud3;
 };

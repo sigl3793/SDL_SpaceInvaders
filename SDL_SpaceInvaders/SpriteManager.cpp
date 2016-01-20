@@ -9,17 +9,10 @@ SpriteManager::SpriteManager(SDL_Renderer* p_pxRenderer)
 
 SpriteManager::~SpriteManager()
 {
-	//TODO: Clean everything from vector and map
 	{
-		// http://en.cppreference.com/w/cpp/language/auto
-		// auto with templates uses deduction to create the specific iterator we need
-		// In the below example auto will be replaced with std::vector<Sprite*>::iterator
-		// std::vector<Sprite*>::iterator it = m_apxSprites.begin();
-
 		auto it = m_apxSprites.begin(); //Iterator starts at the beginning of the std::vector
 		while (it != m_apxSprites.end())  // While the iterator does not point beyond the end of the std::vector we loop
 		{
-
 			delete (*it); // Delete the object at the memory adress the pointer is pointing to
 			it++; // Increment what memory adress the pointer is pointing on
 		}
@@ -29,9 +22,8 @@ SpriteManager::~SpriteManager()
 	}
 	{
 		// std::map contains std::pair's and each pair has a key and value. First is key, second is value std::map<key, value>
-		// Same procedure as with the Sprite* std::vector but instead of deleting the objevt we uses
+		// Same procedure as with the Sprite* std::vector but instead of deleting the object we uses
 		// SDL_DestroyTexture to destroy the value in the key/value pair the iterator is pointing on.
-
 		auto it = m_apxTextures.begin();
 		while (it != m_apxTextures.end())
 		{
@@ -44,7 +36,6 @@ SpriteManager::~SpriteManager()
 
 Sprite* SpriteManager::CreateSprite(const std::string& p_sFilepath, int p_iX, int p_iY, int p_iW, int p_iH)
 {
-	// First we try to find the texture in our std::map
 	auto it = m_apxTextures.find(p_sFilepath);
 	if (it == m_apxTextures.end())
 	{

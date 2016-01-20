@@ -21,6 +21,7 @@
 #include <iostream>
 #include "Engine.h"
 #include "InputManager.h"
+#include "Hud.h"
 
 
 GameState::GameState(System& p_xSystem)
@@ -29,43 +30,36 @@ GameState::GameState(System& p_xSystem)
 	m_pxPlayer = nullptr;
 	m_pxShot = nullptr;
 	m_pxEnemyShot = nullptr;
-	m_pxSoundClip = nullptr;
-	m_pxAudioManager = nullptr;
+	m_pxSoundClip1 = nullptr;
+	m_pxSoundClip2 = nullptr;
+	m_pxSoundClip3 = nullptr;
+	m_pxHud1 = nullptr;
+	m_pxHud2 = nullptr;
+	m_pxHud3 = nullptr;
 	Score = 0;
-
-	/*if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
-	{
-		const char* error = Mix_GetError();
-		SDL_Log(error);
-	}
-
-	m_xPlopSound = Mix_LoadWAV("../assets/plop.wav");
-	if (m_xPlopSound == nullptr)
-	{
-		const char* error = Mix_GetError();
-		SDL_Log(error);
-	}
-
-	m_xMusic = Mix_LoadMUS("../assets/batmetal.wav");
-	if (m_xMusic == nullptr)
-	{
-		const char* error = Mix_GetError();
-		SDL_Log(error);
-	}*/
+	Lives = 3;
 }
 
 GameState::~GameState()
 {
-	Mix_FreeChunk(m_xPlopSound);
-	m_xPlopSound = nullptr;
-
-	Mix_FreeMusic(m_xMusic);
-	m_xMusic = nullptr;
 }
 
 void GameState::Enter()
 {
-	m_pxSoundClip = m_xSystem.m_pxAudioManager->CreateSound("../assets/plop.wav");
+	Mix_ResumeMusic();
+
+	Sprite* xHud1 = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/Lives.bmp", 0, 0, 228, 30);
+	m_pxHud1 = new Hud(xHud1, 0, 0);
+
+	Sprite* xHud2 = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/Lives.bmp", 0, 0, 185, 30);
+	m_pxHud2 = new Hud(xHud2, 0, 0);
+
+	Sprite* xHud3 = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/Lives.bmp", 0, 0, 145, 30);
+	m_pxHud3 = new Hud(xHud3, 0, 0);
+
+	m_pxSoundClip1 = m_xSystem.m_pxAudioManager->CreateSound("../assets/plop.wav");
+	m_pxSoundClip2 = m_xSystem.m_pxAudioManager->CreateSound("../assets/hit.wav");
+	m_pxSoundClip3 = m_xSystem.m_pxAudioManager->CreateSound("../assets/shot.wav");
 
 	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/player.bmp", 0, 0, 60, 20);
 	SDL_Rect* xRect = xSprite->GetRegion();
@@ -80,11 +74,17 @@ void GameState::Enter()
 		m_xSystem.m_iScreenWidth,
 		m_xSystem.m_iScreenHeight);
 
-	m_pxEnemyShot = new EnemyShot(m_xSystem.m_pxInputManager,
-		m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invadersgammal.bmp", 73, 2, 3, 9),
-		m_xSystem.m_iScreenWidth,
-		m_xSystem.m_iScreenHeight);
-	m_apxEnemyShot.push_back(m_pxEnemyShot);
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			m_pxEnemyShot = new EnemyShot(m_xSystem.m_pxInputManager,
+				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invadersgammal.bmp", 73, 2, 3, 9),
+				m_xSystem.m_iScreenWidth,
+				m_xSystem.m_iScreenHeight);
+			m_apxEnemyShot.push_back(m_pxEnemyShot);
+		}
+	}
 
 	for (int i = 0; i < 7; i++)
 	{
@@ -132,34 +132,27 @@ void GameState::Enter()
 				minIndex = 4;
 				maxIndex = 2;
 			}
-			// Invader*
+
 			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
-			m_pxInvader = new Invader(
+			Invader* pxInvader = new Invader(
 				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
 				0.0f + i * 70.0f, //-25
 				50.0f + j * 50.0f);
-			m_apxInvaders.push_back(m_pxInvader);
+			m_apxInvaders.push_back(pxInvader);
 		}
 	}
-
-	//Mix_PlayMusic(m_xMusic, -1);
 }
 
 void GameState::Exit()
 {
-	m_xSystem.m_pxAudioManager->DestroySound("../assets/plop.wav");
-
-	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxPlayer->GetSprite());
-	delete m_pxPlayer;
-	m_pxPlayer = nullptr;
-
-	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxShot->GetSprite());
-	delete m_pxShot;
-	m_pxShot = nullptr;
-
-	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxEnemyShot->GetSprite());
-	delete m_pxEnemyShot;
-	m_pxEnemyShot = nullptr;
+	auto it = m_apxInvaders.begin();
+	while (it != m_apxInvaders.end())
+	{
+		m_xSystem.m_pxSpriteManager->DestroySprite((*it)->GetSprite());
+		delete (*it);
+		it++;
+	}
+	m_apxInvaders.clear();
 
 	auto it2 = m_apxDefence.begin();
 	while (it2 != m_apxDefence.end())
@@ -170,14 +163,39 @@ void GameState::Exit()
 	}
 	m_apxDefence.clear();
 
-	auto it = m_apxInvaders.begin();
-	while (it != m_apxInvaders.end())
+	auto it3 = m_apxEnemyShot.begin();
+	while (it3 != m_apxEnemyShot.end())
 	{
-		m_xSystem.m_pxSpriteManager->DestroySprite((*it)->GetSprite());
-		delete (*it);
-		it++;
+		m_xSystem.m_pxSpriteManager->DestroySprite((*it3)->GetSprite());
+		delete (*it3);
+		it3++;
 	}
-	m_apxInvaders.clear();
+
+	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxShot->GetSprite());
+	delete m_pxShot;
+	m_pxShot = nullptr;
+
+	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxPlayer->GetSprite());
+	delete m_pxPlayer;
+	m_pxPlayer = nullptr;
+
+	m_xSystem.m_pxAudioManager->DestroySound("../assets/shot.wav");
+	m_xSystem.m_pxAudioManager->DestroySound("../assets/hit.wav");
+	m_xSystem.m_pxAudioManager->DestroySound("../assets/plop.wav");
+
+	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxHud3->GetSprite());
+	delete m_pxHud3;
+	m_pxHud3 = nullptr;
+
+	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxHud2->GetSprite());
+	delete m_pxHud2;
+	m_pxHud2 = nullptr;
+
+	m_xSystem.m_pxSpriteManager->DestroySprite(m_pxHud1->GetSprite());
+	delete m_pxHud1;
+	m_pxHud1 = nullptr;
+
+	Mix_HaltMusic();
 }
 
 bool GameState::Update(float p_fDeltaTime)
@@ -188,31 +206,22 @@ bool GameState::Update(float p_fDeltaTime)
 	if (m_pxShot->IsActive() == false)
 	{
 		m_pxShot->SetPosition(m_pxPlayer->GetX() + m_pxPlayer->GetSprite()->GetRegion()->w / 2 - m_pxShot->GetSprite()->GetRegion()->w / 2,
-			m_pxPlayer->GetY() - m_pxPlayer->GetSprite()->GetRegion()->h / 2 - m_pxShot->GetSprite()->GetRegion()->h / 2 + 15);
+			m_pxPlayer->GetY() + m_pxPlayer->GetSprite()->GetRegion()->h / 2 - m_pxShot->GetSprite()->GetRegion()->h / 2);
 	}
 	if (m_pxShot->GetY() > m_xSystem.m_iScreenHeight)
 	{
 		m_pxShot->Deactivate();
+		m_pxShot->SetPosition(m_pxPlayer->GetX() + m_pxPlayer->GetSprite()->GetRegion()->w / 2, m_pxPlayer->GetY());
 	}
 
-
-	//m_pxEnemyShot->Update(p_fDeltaTime);
-	/*if (m_pxEnemyShot->IsActive() == false)
-	{
-		m_pxEnemyShot->SetPosition(m_pxInvader->GetX() + m_pxInvader->GetSprite()->GetRegion()->w / 2 - m_pxEnemyShot->GetSprite()->GetRegion()->w / 2,
-			m_pxInvader->GetY() - m_pxInvader->GetSprite()->GetRegion()->h / 2 - m_pxEnemyShot->GetSprite()->GetRegion()->h / 2);
-	}*/
-	if (m_pxEnemyShot->GetY() > m_xSystem.m_iScreenHeight)
-	{
-		m_pxEnemyShot->Deactivate();
-	}
-
+	auto it3 = m_apxEnemyShot.begin();
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
 		if ((*it)->IsActive())
 		{
 			(*it)->Update(p_fDeltaTime);
+			(*it3)->Update(p_fDeltaTime);
 			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth || (*it)->GetX() <= 0)
 			{
 				for (auto it2 = m_apxInvaders.begin(); it2 != m_apxInvaders.end(); it2++)
@@ -220,24 +229,32 @@ bool GameState::Update(float p_fDeltaTime)
 					(*it2)->ReverseDirectionX();
 				}
 			}
-			if (m_xSystem.m_pxInputManager->GetMouse()->IsButtonDown(2))
+			if ((*it3)->IsActive() == false)
 			{
-				for (auto it3 = m_apxEnemyShot.begin(); it3 != m_apxEnemyShot.end(); it3++)
-				{
-					//m_pxEnemyShot->Activate();
-					m_pxEnemyShot->Update(p_fDeltaTime);
-				}
+				(*it3)->SetPosition((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w / 2 - (*it3)->GetSprite()->GetRegion()->w / 2,
+					(*it)->GetY() - (*it)->GetSprite()->GetRegion()->h / 2 - (*it3)->GetSprite()->GetRegion()->h / 2);
 			}
-			if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h >  m_xSystem.m_iScreenHeight)
+			if ((*it3)->GetY() > m_xSystem.m_iScreenHeight)
 			{
-				return false;
-			}
-			else if (Score == 6000)
-			{
-				return false;
+				(*it3)->Deactivate();
+				(*it3)->SetPosition((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w, (*it)->GetY() + (*it)->GetSprite()->GetRegion()->h);
 			}
 		}
+		if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h > m_xSystem.m_iScreenHeight)
+		{
+			return false;
+		}
+		it3++;
 		it++;
+	}
+
+	if (Score == 6000)
+	{
+		return false;
+	}
+	if (Lives == 0)
+	{
+		return false;
 	}
 
 	CheckCollision();
@@ -248,26 +265,26 @@ bool GameState::Update(float p_fDeltaTime)
 void GameState::Draw()
 {
 	m_xSystem.m_pxDrawManager->Draw(m_pxPlayer->GetSprite(), m_pxPlayer->GetX(), m_pxPlayer->GetY());
-	
+
+	if (Lives == 3)
+	{
+		m_xSystem.m_pxDrawManager->Draw(m_pxHud1->GetSprite(), m_pxHud1->GetX(), m_pxHud1->GetY());
+	}
+	if (Lives == 2)
+	{
+		m_xSystem.m_pxDrawManager->Draw(m_pxHud2->GetSprite(), m_pxHud2->GetX(), m_pxHud2->GetY());
+	}
+	if (Lives == 1)
+	{
+		m_xSystem.m_pxDrawManager->Draw(m_pxHud3->GetSprite(), m_pxHud3->GetX(), m_pxHud3->GetY());
+	}
+
 	if (m_pxShot->IsActive() == true)
 	{
 		m_xSystem.m_pxDrawManager->Draw(m_pxShot->GetSprite(), m_pxShot->GetX(), m_pxShot->GetY());
 	}
 
-	/*auto it3 = m_apxEnemyShot.begin();
-	while (it3 != m_apxEnemyShot.end())
-	{
-		if ((*it3)->IsActive() == true)
-		{
-			m_xSystem.m_pxDrawManager->Draw((*it3)->GetSprite(), (*it3)->GetX(), (*it3)->GetY());
-		}
-		it3++;
-	}*/
-	/*if (m_pxEnemyShot->IsActive() == true)
-	{
-		m_xSystem.m_pxDrawManager->Draw(m_pxEnemyShot->GetSprite(), m_pxEnemyShot->GetX(), m_pxEnemyShot->GetY());
-	}*/
-
+	auto it3 = m_apxEnemyShot.begin();
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
@@ -278,19 +295,17 @@ void GameState::Draw()
 				(*it)->GetX(),
 				(*it)->GetY()
 				);
+		}
+		if ((*it3)->IsActive() == true)
+		{
 			m_xSystem.m_pxDrawManager->Draw(
-				m_pxEnemyShot->GetSprite(),
-				m_pxEnemyShot->GetX(),
-				m_pxEnemyShot->GetY()
+				(*it3)->GetSprite(),
+				(*it3)->GetX(),
+				(*it3)->GetY()
 				);
-			if (m_pxEnemyShot->IsActive() == false)
-			{
-				m_pxEnemyShot->SetPosition((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w / 2 + m_pxEnemyShot->GetSprite()->GetRegion()->w / 2,
-					(*it)->GetY() + (*it)->GetSprite()->GetRegion()->h / 2 + m_pxEnemyShot->GetSprite()->GetRegion()->h / 2);
-			}
-			
 		}
 		it++;
+		it3++;
 	}
 
 	auto it2 = m_apxDefence.begin();
@@ -326,7 +341,6 @@ void GameState::CheckCollision()
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
-		//[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,59]
 		if ((*it)->IsVisible())
 		{
 			if (CollisionManager::Check((*it)->GetCollider(), m_pxShot->GetCollider(), iOverlapX, iOverlapY))
@@ -337,7 +351,7 @@ void GameState::CheckCollision()
 					m_pxShot->SetPosition(m_pxShot->GetX() - iOverlapX, m_pxShot->GetY());
 					m_pxShot->Deactivate();
 					Score += 100;
-					m_pxSoundClip->PlaySound();
+					m_pxSoundClip1->PlaySound();
 					std::cout << "Score:" << Score << std::endl;
 				}
 				else
@@ -345,36 +359,19 @@ void GameState::CheckCollision()
 					m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
 					m_pxShot->Deactivate();
 					Score += 100;
-					m_pxSoundClip->PlaySound();
+					m_pxSoundClip1->PlaySound();
 					std::cout << "Score:" << Score << std::endl;
 				}
 			}
 
-			if (Score == 200)
+			if (Score == 1000)
 			{
 				(*it)->IncreaseSpeed() == true;
+			}
 
-			}
-			/*if (Score >= 6000)
+			if (Score == 2500)
 			{
-				std::cout << "YOU WIN" << std::endl;
-				//SDL_QUIT?????
-			}
-			if ((*it)->GetX() <= 0)
-			{
-				(*it)->SetPosition(0, (*it)->GetY());
-				(*it)->ReverseDirectionX();
-			}
-	
-			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth)
-			{
-				(*it)->SetPosition(m_xSystem.m_iScreenWidth - (*it)->GetSprite()->GetRegion()->w, (*it)->GetY());
-				(*it)->ReverseDirectionX();
-			}*/
-			
-			if ((*it)->GetY() + (*it)->GetSprite()->GetRegion()->h >  m_xSystem.m_iScreenHeight)
-			{
-				SDL_Log("YOU LOSE");
+				(*it)->IncreaseSpeedAgain() == true;
 			}
 		}
 		it++;
@@ -383,6 +380,7 @@ void GameState::CheckCollision()
 	auto it2 = m_apxDefence.begin();
 	while (it2 != m_apxDefence.end())
 	{
+		auto it5 = m_apxEnemyShot.begin();
 		if ((*it2)->IsVisible())
 		{
 			if (CollisionManager::Check((*it2)->GetCollider(), m_pxShot->GetCollider(), iOverlapX, iOverlapY))
@@ -391,15 +389,59 @@ void GameState::CheckCollision()
 				if (abs(iOverlapX) > abs(iOverlapY))
 				{
 					m_pxShot->SetPosition(m_pxShot->GetX() - iOverlapX, m_pxShot->GetY());
+					m_pxSoundClip2->PlaySound();
 					m_pxShot->Deactivate();
 				}
 				else
 				{
 					m_pxShot->SetPosition(m_pxShot->GetX(), m_pxShot->GetY() - iOverlapY);
+					m_pxSoundClip2->PlaySound();
 					m_pxShot->Deactivate();
 				}
 			}
 		}
+		while (it5 != m_apxEnemyShot.end())
+		{
+			if (CollisionManager::Check((*it2)->GetCollider(), (*it5)->GetCollider(), iOverlapX, iOverlapY))
+			{
+				if ((*it2)->IsVisible())
+				{
+					if (abs(iOverlapX) > abs(iOverlapY))
+					{
+						(*it5)->Deactivate();
+						m_pxSoundClip2->PlaySound();
+						(*it2)->SetVisible(false);
+					}
+					else
+					{
+						(*it5)->Deactivate();
+						m_pxSoundClip2->PlaySound();
+						(*it2)->SetVisible(false);
+					}
+				}
+			}
+			it5++;
+		}
 		it2++;
+	}
+
+
+	auto it3 = m_apxEnemyShot.begin();
+	while (it3 != m_apxEnemyShot.end())
+	{
+		if (CollisionManager::Check((*it3)->GetCollider(), m_pxPlayer->GetCollider(), iOverlapX, iOverlapY))
+		{
+			if (abs(iOverlapX) > abs(iOverlapY))
+			{
+				(*it3)->Deactivate();
+				Lives -= 1;
+			}
+			else
+			{
+				(*it3)->Deactivate();
+				Lives -= 1;
+			}
+		}
+		it3++;
 	}
 }

@@ -15,6 +15,7 @@ public:
 	MusicClip* CreateMusic(const std::string& p_sFilepath);
 	void DestroySound(const std::string& p_sFilepath);
 	void DestroyMusic(const std::string& p_sFilepath);
+
 private:
 	SoundClip* m_pxSoundClip;
 	MusicClip* m_pxMusicClip;

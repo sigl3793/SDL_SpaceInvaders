@@ -1,4 +1,5 @@
 #pragma once
+
 #include "IState.h"
 
 class DrawManager;
@@ -14,20 +15,8 @@ class Engine
 public:
 	Engine();
 	~Engine();
-
-	/**
-	* Initializes SDL and creates all Managers
-	*/
 	bool Initialize();
-
-	/**
-	* Quits SDL and deletes all Managers
-	*/
 	void Shutdown();
-
-	/**
-	* The Engines update loop
-	*/
 	void Update();
 	void HandleEvents();
 

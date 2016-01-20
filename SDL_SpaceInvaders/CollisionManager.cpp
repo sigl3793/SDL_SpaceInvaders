@@ -3,8 +3,7 @@
 #include "Collider.h"
 #include <math.h>
 
-bool CollisionManager::Check(Collider* p_pxLeft, Collider* p_pxRight,
-	int& p_iOverlapX, int& p_iOverlapY)
+bool CollisionManager::Check(Collider* p_pxLeft, Collider* p_pxRight, int& p_iOverlapX, int& p_iOverlapY)
 {
 	p_iOverlapX = 0;
 	p_iOverlapY = 0;
@@ -16,7 +15,7 @@ bool CollisionManager::Check(Collider* p_pxLeft, Collider* p_pxRight,
 	int iCenterDeltaX = iLeftCenterX - iRightCenterX; // Distance between center X left and right
 	int iCenterDeltaY = iLeftCenterY - iRightCenterY; // Distance between center Y left and right
 
-													  // If distance between the rectangles center in X axis is LESS then their half their combined WIDTH they are overlapping in X axis. 
+	 // If distance between the rectangles center in X axis is LESS then their half their combined WIDTH they are overlapping in X axis. 
 	if (abs(iCenterDeltaX) < (p_pxLeft->GetW() / 2 + p_pxRight->GetW() / 2))
 	{
 		// If distance between the rectangles center in Y axis is LESS then their half their combined HEIGHT they are overlapping in Y axis. 

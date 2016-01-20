@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IEntity.h"
-//extern int ammo;
 
 class Invader : public IEntity
 {
@@ -15,31 +14,30 @@ public:
 	float GetY();
 	bool IsVisible();
 	EENTITYTYPE GetType();
-
 	void SetVisible(bool p_bValue);
-
 	bool IsActive();
-	//void Activate();
 	void Deactivate();
 	void SetDirectionX(float p_fDirX);
 	void SetDirectionY(float p_fDirY);
 	void SetPosition(float p_fX, float p_fY);
 	void ReverseDirectionX();
 	bool IncreaseSpeed();
+	bool IncreaseSpeedAgain();
+
 private:
-	//AnimatedSprite* m_pxAnimatedSprite;
 	Sprite* m_pxSprite;
 	Collider* m_pxCollider;
-	float m_fX;
-	float m_fY;
 	int m_iScreenWidth;
 	int m_iScreenHeight;
-	bool m_bVisible;
-	
-	bool m_bActive;
-	float m_fSpeed;
+	float m_fX;
+	float m_fY;
 	float m_fDirX;
 	float m_fDirY;
-	bool m_bIncrease;
+	float m_fSpeed;
 	float m_fISpeed;
+	bool m_bVisible;
+	bool m_bActive;
+	bool m_bIncrease;
+	bool m_bIncreaseAgain;
+	
 };
