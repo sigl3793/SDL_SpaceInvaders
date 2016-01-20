@@ -32,7 +32,7 @@ EnemyShot::~EnemyShot()
 
 void EnemyShot::Update(float p_fDeltaTime)
 {
-	int shoot = 1 + (rand() % 5000);
+	int shoot = 1 + (rand() % 3000);
 	if (m_bActive)
 	{
 		m_fY += m_fDirY * m_fSpeed * p_fDeltaTime;
