@@ -218,15 +218,15 @@ bool GameState::Update(float p_fDeltaTime)
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
 	{
-		if ((*it)->IsActive())
+		if ((*it)->IsActive() && (*it)->IsVisible())
 		{
 			(*it)->Update(p_fDeltaTime);
 			(*it3)->Update(p_fDeltaTime);
 			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth || (*it)->GetX() <= 0)
 			{
-				for (auto it2 = m_apxInvaders.begin(); it2 != m_apxInvaders.end(); it2++)
+				for (auto it = m_apxInvaders.begin(); it != m_apxInvaders.end(); it++)
 				{
-					(*it2)->ReverseDirectionX();
+					(*it)->ReverseDirectionX();
 				}
 			}
 			if ((*it3)->IsActive() == false)
