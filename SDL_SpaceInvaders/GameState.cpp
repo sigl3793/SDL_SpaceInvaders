@@ -105,8 +105,8 @@ void GameState::Enter()
 
 	SDL_Rect Waves[] =
 	{
-		{ 1,  32, 27, 24 }, // green
-		{ 31, 32, 27, 24 }, // green
+		{ 1,  32, 27, 27 }, // green
+		{ 31, 32, 27, 27 }, // green
 		{ 1,  2, 27, 27 }, // purple
 		{ 31,  2, 27, 27 }, // purple
 		{ 1, 62, 27, 27 }, // red
@@ -138,7 +138,7 @@ void GameState::Enter()
 			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
 			m_pxInvader = new Invader(
 				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
-				0.0f + i * 70.0f, //-25
+				1.0f + i * 70.0f, //-25
 				50.0f + j * 50.0f);
 			m_apxInvaders.push_back(m_pxInvader);
 		}
@@ -216,6 +216,22 @@ bool GameState::Update(float p_fDeltaTime)
 		m_pxShot->SetPosition(m_pxPlayer->GetX() + m_pxPlayer->GetSprite()->GetRegion()->w / 2, m_pxPlayer->GetY());
 	}
 
+	auto iter = m_apxInvaders.begin();
+	while (iter != m_apxInvaders.end())
+	{
+		if ((*iter)->GetX() + (*iter)->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth || (*iter)->GetX() <= 0)
+		{
+			auto iter = m_apxInvaders.begin();
+			while (iter != m_apxInvaders.end())
+			{
+				(*iter)->ReverseDirectionX();
+				(*iter)->Update(p_fDeltaTime);
+				iter++;
+			}
+		}
+		iter++;
+	}
+
 	auto it3 = m_apxEnemyShot.begin();
 	auto it = m_apxInvaders.begin();
 	while (it != m_apxInvaders.end())
@@ -224,13 +240,6 @@ bool GameState::Update(float p_fDeltaTime)
 		{
 			(*it)->Update(p_fDeltaTime);
 			(*it3)->Update(p_fDeltaTime);
-			if ((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w > m_xSystem.m_iScreenWidth || (*it)->GetX() <= 0)
-			{
-				for (auto it = m_apxInvaders.begin(); it != m_apxInvaders.end(); it++)
-				{
-					(*it)->ReverseDirectionX();
-				}
-			}
 			if ((*it3)->IsActive() == false)
 			{
 				(*it3)->SetPosition((*it)->GetX() + (*it)->GetSprite()->GetRegion()->w / 2 - (*it3)->GetSprite()->GetRegion()->w / 2,
