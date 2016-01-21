@@ -4,7 +4,7 @@ class Sprite
 {
 public:
 	Sprite(SDL_Texture* p_pxTexture);
-	Sprite(SDL_Texture* p_pxTexture, int p_iX, int p_iY, int p_iW, int p_iH);
+	Sprite(SDL_Texture* p_pxTexture, float p_fX, float p_fY, float p_fW, float p_fH);
 	~Sprite();
 	SDL_Texture* GetTexture();
 	SDL_Rect* GetRegion();

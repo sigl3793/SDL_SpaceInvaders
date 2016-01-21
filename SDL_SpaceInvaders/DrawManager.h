@@ -11,7 +11,7 @@ public:
 	void Shutdown();
 	void Clear();
 	void Present();
-	void Draw(Sprite* p_pxSprite, int p_iX, int p_iY);
+	void Draw(Sprite* p_pxSprite, float p_fX, float p_fY);
 	SDL_Renderer* GetRenderer();
 
 private:

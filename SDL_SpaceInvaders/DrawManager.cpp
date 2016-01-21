@@ -59,13 +59,13 @@ void DrawManager::Present()
 	SDL_RenderPresent(m_pxRenderer);
 }
 
-void DrawManager::Draw(Sprite* p_pxSprite, int p_iX, int p_iY)
+void DrawManager::Draw(Sprite* p_pxSprite, float p_fX, float p_fY)
 {
 	// Creates a destination rect by combining the position parameters with the Sprite region data. This is later used to know where and how big will
 	// render thic picture.
 	SDL_Rect rect = 
 	{
-		p_iX, p_iY, p_pxSprite->GetRegion()->w, p_pxSprite->GetRegion()->h 
+		p_fX, p_fY, p_pxSprite->GetRegion()->w, p_pxSprite->GetRegion()->h 
 	};
 
 	// RenderCopy renders a source rectangle from a texture to a target rectangle on a renderer. Then we render the piece the Sprites Region specifies

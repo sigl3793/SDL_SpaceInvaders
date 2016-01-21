@@ -30,6 +30,8 @@ GameState::GameState(System& p_xSystem)
 	m_pxPlayer = nullptr;
 	m_pxShot = nullptr;
 	m_pxEnemyShot = nullptr;
+	m_pxDefence = nullptr;
+	m_pxInvader = nullptr;
 	m_pxSoundClip1 = nullptr;
 	m_pxSoundClip2 = nullptr;
 	m_pxSoundClip3 = nullptr;
@@ -49,13 +51,13 @@ void GameState::Enter()
 	Mix_ResumeMusic();
 
 	Sprite* xHud1 = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/Lives.bmp", 0, 0, 228, 30);
-	m_pxHud1 = new Hud(xHud1, 0, 0);
+	m_pxHud1 = new Hud(xHud1, 0.0f, 0.0f);
 
 	Sprite* xHud2 = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/Lives.bmp", 0, 0, 185, 30);
-	m_pxHud2 = new Hud(xHud2, 0, 0);
+	m_pxHud2 = new Hud(xHud2, 0.0f, 0.0f);
 
 	Sprite* xHud3 = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/Lives.bmp", 0, 0, 145, 30);
-	m_pxHud3 = new Hud(xHud3, 0, 0);
+	m_pxHud3 = new Hud(xHud3, 0.0f, 0.0f);
 
 	m_pxSoundClip1 = m_xSystem.m_pxAudioManager->CreateSound("../assets/plop.wav");
 	m_pxSoundClip2 = m_xSystem.m_pxAudioManager->CreateSound("../assets/hit.wav");
@@ -65,8 +67,8 @@ void GameState::Enter()
 	SDL_Rect* xRect = xSprite->GetRegion();
 	int iHeight = xRect->h;
 	m_pxPlayer = new Player(m_xSystem.m_pxInputManager,
-		xSprite, 0,
-		m_xSystem.m_iScreenHeight - 20 - iHeight,
+		xSprite, 0.0f,
+		m_xSystem.m_iScreenHeight - 20.0f - iHeight,
 		m_xSystem.m_iScreenWidth);
 
 	m_pxShot = new Shot(m_xSystem.m_pxInputManager,
@@ -93,8 +95,8 @@ void GameState::Enter()
 			for (int x = 0; x < 3; x++)
 			{
 				m_pxDefence = new Defence(m_xSystem.m_pxSpriteManager->CreateSprite("../assets/main.bmp", 0, 0, 16, 16),
-					100 + (i*125.0f) + x*16,
-					600 + j * 16.0f);
+					100.0f + (i*125.0f) + x*16.0f,
+					600.0f + j * 16.0f);
 				m_apxDefence.push_back(m_pxDefence);
 			}
 		}
@@ -134,11 +136,11 @@ void GameState::Enter()
 			}
 
 			SDL_Rect& rect = Waves[(rand() % maxIndex) + minIndex];
-			Invader* pxInvader = new Invader(
+			m_pxInvader = new Invader(
 				m_xSystem.m_pxSpriteManager->CreateSprite("../assets/invaders.bmp", rect.x, rect.y, rect.w, rect.h),
 				0.0f + i * 70.0f, //-25
 				50.0f + j * 50.0f);
-			m_apxInvaders.push_back(pxInvader);
+			m_apxInvaders.push_back(m_pxInvader);
 		}
 	}
 }

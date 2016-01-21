@@ -7,7 +7,7 @@ class SpriteManager
 public:
 	SpriteManager(SDL_Renderer* p_pxRenderer);
 	~SpriteManager();
-	Sprite* CreateSprite(const std::string& p_sFilepath, int p_iX, int p_iY, int p_iW, int p_iH);
+	Sprite* CreateSprite(const std::string& p_sFilepath, float p_fX, float p_fY, float p_fW, float p_fH);
 	void DestroySprite(Sprite* p_xSprite);
 
 private:

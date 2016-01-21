@@ -25,7 +25,7 @@ void GameOverState::Enter()
 {
 	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/GameOver.bmp", 0, 0, 1024, 768);
 	SDL_Rect* xRect = xSprite->GetRegion();
-	m_pxMenu = new Menu(m_xSystem.m_pxMouse, xSprite, 0, 0, m_xSystem.m_iScreenWidth, m_xSystem.m_iScreenHeight);
+	m_pxMenu = new Menu(m_xSystem.m_pxMouse, xSprite, 0.0f, 0.0f, m_xSystem.m_iScreenWidth, m_xSystem.m_iScreenHeight);
 }
 
 void GameOverState::Exit()

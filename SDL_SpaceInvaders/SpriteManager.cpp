@@ -34,7 +34,7 @@ SpriteManager::~SpriteManager()
 	}
 }
 
-Sprite* SpriteManager::CreateSprite(const std::string& p_sFilepath, int p_iX, int p_iY, int p_iW, int p_iH)
+Sprite* SpriteManager::CreateSprite(const std::string& p_sFilepath, float p_fX, float p_fY, float p_fW, float p_fH)
 {
 	auto it = m_apxTextures.find(p_sFilepath);
 	if (it == m_apxTextures.end())
@@ -48,7 +48,7 @@ Sprite* SpriteManager::CreateSprite(const std::string& p_sFilepath, int p_iX, in
 		it = m_apxTextures.find(p_sFilepath);
 	}
 
-	Sprite* xSprite = new Sprite(it->second, p_iX, p_iY, p_iW, p_iH);
+	Sprite* xSprite = new Sprite(it->second, p_fX, p_fY, p_fW, p_fH);
 	m_apxSprites.push_back(xSprite);
 	return xSprite;
 }

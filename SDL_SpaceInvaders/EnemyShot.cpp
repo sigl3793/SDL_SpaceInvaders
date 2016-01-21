@@ -21,7 +21,7 @@ EnemyShot::EnemyShot(InputManager* p_pxInputManager,Sprite* p_pxSprite, int p_iS
 		m_pxSprite->GetRegion()->w,
 		m_pxSprite->GetRegion()->h);
 	m_pxCollider->SetParent(this);
-	srand(time(0));
+	//srand(time(0));
 }
 
 EnemyShot::~EnemyShot()

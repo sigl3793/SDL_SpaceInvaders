@@ -10,13 +10,13 @@ Sprite::Sprite(SDL_Texture* p_pxTexture)
 	m_xRegion.h = 0;
 }
 
-Sprite::Sprite(SDL_Texture* p_pxTexture, int p_iX, int p_iY, int p_iW, int p_iH)
+Sprite::Sprite(SDL_Texture* p_pxTexture, float p_fX, float p_fY, float p_fW, float p_fH)
 {
 	m_pxTexture = p_pxTexture;
-	m_xRegion.x = p_iX;
-	m_xRegion.y = p_iY;
-	m_xRegion.w = p_iW;
-	m_xRegion.h = p_iH;
+	m_xRegion.x = p_fX;
+	m_xRegion.y = p_fY;
+	m_xRegion.w = p_fW;
+	m_xRegion.h = p_fH;
 }
 
 Sprite::~Sprite()

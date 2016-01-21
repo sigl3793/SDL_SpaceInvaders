@@ -79,6 +79,7 @@ void Invader::SetVisible(bool p_bValue)
 
 bool Invader::IsActive()
 {
+	//m_fDirX = 0.75f;
 	m_fSpeed = 100.0f;
 	return m_bActive;
 }
@@ -107,8 +108,9 @@ void Invader::SetPosition(float p_fX, float p_fY)
 
 void Invader::ReverseDirectionX()
 {
-	m_fY += 10;
+	m_fY += 10.0f;
 	m_fDirX *= -1.0f;
+	m_pxCollider->Refresh();
 }
 
 bool Invader::IncreaseSpeed()
