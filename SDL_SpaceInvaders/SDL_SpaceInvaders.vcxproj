@@ -128,7 +128,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>../external/SDL/include;../external/SDL2_mixer/include;$(IncludePath)</IncludePath>
+    <IncludePath>../external/SDL/include;../external/SDL2_mixer/include;../external/glm/include;$(IncludePath)</IncludePath>
     <LibraryPath>../external/SDL/lib/win32;../external/SDL2_mixer/lib/win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

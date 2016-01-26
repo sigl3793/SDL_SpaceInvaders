@@ -7,8 +7,8 @@ Mouse::Mouse()
 	{
 		m_abButtons[i] = false;
 	}
-	m_iX = 0;
-	m_iY = 0;
+	m_iX = 0.0f;
+	m_iY = 0.0f;
 }
 
 Mouse::~Mouse()

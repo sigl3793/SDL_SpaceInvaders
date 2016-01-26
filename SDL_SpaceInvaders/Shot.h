@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IEntity.h"
+#include "stdafx.h"
 
 class Mouse;
 class InputManager;
@@ -35,4 +36,5 @@ private:
 	int m_iScreenHeight;
 	bool m_bVisible;
 	bool m_bActive;
+
 };

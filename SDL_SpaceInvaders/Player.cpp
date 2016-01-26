@@ -27,7 +27,7 @@ Player::~Player()
 
 void Player::Update(float p_fDeltaTime)
 {
-	m_fX = m_pxInputManager->GetMouse()->GetX() - m_pxSprite->GetRegion()->w / 2;
+	/*m_fX = m_pxInputManager->GetMouse()->GetX() - m_pxSprite->GetRegion()->w / 2;
 	if (m_fX < 0)
 	{
 		m_fX = 0;
@@ -36,7 +36,9 @@ void Player::Update(float p_fDeltaTime)
 	{
 		m_fX = m_iScreenWidth - m_pxSprite->GetRegion()->w;
 	}
-	m_pxCollider->Refresh();
+	m_pxCollider->Refresh();*/
+
+	m_fX = m_iScreenWidth / 2;
 }
 
 Sprite* Player::GetSprite() 

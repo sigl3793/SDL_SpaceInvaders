@@ -21,7 +21,7 @@ Shot::Shot(InputManager* p_pxInputManager, Sprite* p_pxSprite, int p_iScreenWidt
 		m_pxSprite->GetRegion()->w,
 		m_pxSprite->GetRegion()->h);
 	m_pxCollider->SetParent(this);
-	
+
 }
 
 Shot::~Shot()

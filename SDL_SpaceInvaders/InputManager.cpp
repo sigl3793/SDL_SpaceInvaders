@@ -7,7 +7,7 @@
 #include "Shot.h"
 #include "Keyboard.h"
 
-InputManager::InputManager()
+InputManager::InputManager() : _mouseCoords(0.0f)
 {
 	m_pxMouse = new Mouse;
 	m_pxKeyboard = new Keyboard;
@@ -41,4 +41,10 @@ Mouse* InputManager::GetMouse()
 void InputManager::SetMouse(int button, bool state)
 {
 	m_pxMouse->SetButton(button, state);
+}
+
+void InputManager::SetMouseCoords(float x, float y)
+{
+	_mouseCoords.x = x;
+	_mouseCoords.y = y;
 }
