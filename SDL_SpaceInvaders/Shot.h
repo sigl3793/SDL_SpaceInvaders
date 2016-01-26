@@ -37,4 +37,7 @@ private:
 	bool m_bVisible;
 	bool m_bActive;
 
+	double bullet_direction;
+	double MouseX;
+	double MouseY;
 };

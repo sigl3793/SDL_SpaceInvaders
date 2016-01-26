@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Mouse.h"
+#include "Keyboard.h"
 #include "Sprite.h"
 #include "Collider.h"
 #include "InputManager.h"
@@ -27,18 +28,27 @@ Player::~Player()
 
 void Player::Update(float p_fDeltaTime)
 {
-	/*m_fX = m_pxInputManager->GetMouse()->GetX() - m_pxSprite->GetRegion()->w / 2;
+	//m_fX = m_pxInputManager->GetMouse()->GetX() - m_pxSprite->GetRegion()->w / 2;
+	//m_fX = m_iScreenWidth / 2;
 	if (m_fX < 0)
 	{
 		m_fX = 0;
 	}
 	if ((m_fX + m_pxSprite->GetRegion()->w) > m_iScreenWidth)
 	{
-		m_fX = m_iScreenWidth - m_pxSprite->GetRegion()->w;
+		//m_fX = m_iScreenWidth - m_pxSprite->GetRegion()->w;
+		m_fX = 966;
 	}
-	m_pxCollider->Refresh();*/
 
-	m_fX = m_iScreenWidth / 2;
+	if (m_pxInputManager->GetKeyboard()->IsKeyDown(4))
+	{
+		m_fX -= 3;
+	}
+	if (m_pxInputManager->GetKeyboard()->IsKeyDown(7))
+	{
+		m_fX += 3;
+	}
+	m_pxCollider->Refresh();
 }
 
 Sprite* Player::GetSprite() 

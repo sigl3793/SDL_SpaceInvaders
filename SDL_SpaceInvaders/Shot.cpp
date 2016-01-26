@@ -34,21 +34,26 @@ void Shot::Update(float p_fDeltaTime)
 {
 	if (m_bActive)
 	{
-		m_fY += m_fDirY * m_fSpeed * p_fDeltaTime;
+		m_fX += m_fSpeed*(cos(bullet_direction))*p_fDeltaTime;
+		m_fY += m_fSpeed*(sin(bullet_direction))*p_fDeltaTime;
+		m_pxCollider->Refresh();
+
 		if (m_fY < 0)
 		{
 			m_fY = 0;
 			Deactivate();
 		}
 		m_pxCollider->Refresh();
-	}
-	else
-	{
-		if (m_pxInputManager->GetMouse()->IsButtonDown(1))
+		if (m_fX > 1024 || m_fX < 0)
 		{
-			Activate();
-			m_pxInputManager->GetMouse()->SetButton(1, false);
+			Deactivate();
 		}
+	}
+
+	if (m_pxInputManager->GetMouse()->IsButtonDown(1) && m_bActive != true)
+	{
+		Activate();
+		m_pxInputManager->GetMouse()->SetButton(1, false);
 	}
 }
 
@@ -89,9 +94,11 @@ EENTITYTYPE Shot::GetType()
 
 void Shot::Activate()
 {
-	m_bActive = true;
+	MouseY = m_pxInputManager->GetMouse()->GetY();
+	MouseX = m_pxInputManager->GetMouse()->GetX();
+	bullet_direction = atan2(MouseY - m_fY, MouseX - m_fX);
 	m_fSpeed = 1000.0f;
-	m_fDirY = -1.0f;
+	m_bActive = true;
 }
 
 void Shot::Deactivate()
