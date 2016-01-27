@@ -66,8 +66,10 @@ void GameState::Enter()
 	Sprite* xSprite = m_xSystem.m_pxSpriteManager->CreateSprite("../assets/player.bmp", 0, 0, 60, 20);
 	SDL_Rect* xRect = xSprite->GetRegion();
 	int iHeight = xRect->h;
+	int iWidth = xRect->w;
 	m_pxPlayer = new Player(m_xSystem.m_pxInputManager,
-		xSprite, 0.0f,
+		xSprite, 
+		m_xSystem.m_iScreenWidth / 2 - iWidth / 2,
 		m_xSystem.m_iScreenHeight - 20.0f - iHeight,
 		m_xSystem.m_iScreenWidth);
 

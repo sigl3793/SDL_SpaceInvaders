@@ -137,7 +137,7 @@ void Engine::HandleEvents()
 		else if (xEvent.type == SDL_MOUSEMOTION)
 		{
 			m_pxInputManager->GetMouse()->SetPosition(xEvent.motion.x, xEvent.motion.y);
-			std::cout << xEvent.motion.x << " " << xEvent.motion.y << std::endl;
+			//std::cout << xEvent.motion.x << " " << xEvent.motion.y << std::endl;
 			//m_pxInputManager->SetMouseCoords(xEvent.motion.x, xEvent.motion.y);
 		}
 		else if (xEvent.type == SDL_KEYDOWN)
